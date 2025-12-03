@@ -1,0 +1,127 @@
+{
+    "name": {
+        "string": "Model Description",
+        "type": "char"
+    },
+    "model": {
+        "string": "Model",
+        "type": "char"
+    },
+    "order": {
+        "help": "SQL expression for ordering records in the model; e.g. x_sequence asc, id desc",
+        "string": "Order",
+        "type": "char"
+    },
+    "info": {
+        "string": "Information",
+        "type": "text"
+    },
+    "field_id": {
+        "relation": "ir.model.fields",
+        "string": "Fields",
+        "type": "one2many"
+    },
+    "inherited_model_ids": {
+        "help": "The list of models that extends the current model.",
+        "relation": "ir.model",
+        "string": "Inherited models",
+        "type": "many2many"
+    },
+    "state": {
+        "string": "Type",
+        "type": "selection"
+    },
+    "access_ids": {
+        "relation": "ir.model.access",
+        "string": "Access",
+        "type": "one2many"
+    },
+    "rule_ids": {
+        "relation": "ir.rule",
+        "string": "Record Rules",
+        "type": "one2many"
+    },
+    "transient": {
+        "string": "Transient Model",
+        "type": "boolean"
+    },
+    "modules": {
+        "help": "List of modules in which the object is defined or inherited",
+        "string": "In Apps",
+        "type": "char"
+    },
+    "view_ids": {
+        "relation": "ir.ui.view",
+        "string": "Views",
+        "type": "one2many"
+    },
+    "count": {
+        "help": "Total number of records in this model",
+        "string": "Count (Incl. Archived)",
+        "type": "integer"
+    },
+    "id": {
+        "string": "ID",
+        "type": "integer"
+    },
+    "display_name": {
+        "string": "Display Name",
+        "type": "char"
+    },
+    "create_uid": {
+        "relation": "res.users",
+        "string": "Created by",
+        "type": "many2one"
+    },
+    "create_date": {
+        "string": "Created on",
+        "type": "datetime"
+    },
+    "write_uid": {
+        "relation": "res.users",
+        "string": "Last Updated by",
+        "type": "many2one"
+    },
+    "write_date": {
+        "string": "Last Updated on",
+        "type": "datetime"
+    },
+    "is_mail_thread": {
+        "string": "Has Mail Thread",
+        "type": "boolean"
+    },
+    "is_mail_activity": {
+        "string": "Has Mail Activity",
+        "type": "boolean"
+    },
+    "is_mail_blacklist": {
+        "string": "Has Mail Blacklist",
+        "type": "boolean"
+    },
+    "is_mail_thread_sms": {
+        "help": "Whether this model supports messages and notifications through SMS",
+        "string": "Mail Thread SMS",
+        "type": "boolean"
+    },
+    "website_form_access": {
+        "help": "Enable the form builder feature for this model.",
+        "string": "Allowed to use in forms",
+        "type": "boolean"
+    },
+    "website_form_default_field_id": {
+        "help": "Specify the field which will contain meta and custom form fields datas.",
+        "relation": "ir.model.fields",
+        "string": "Field for custom form data",
+        "type": "many2one"
+    },
+    "website_form_label": {
+        "help": "Form action label. Ex: crm.lead could be Send an e-mail and project.issue could be Create an Issue.",
+        "string": "Label for form action",
+        "type": "char"
+    },
+    "website_form_key": {
+        "help": "Used in FormBuilder Registry",
+        "string": "Website Form Key",
+        "type": "char"
+    }
+}

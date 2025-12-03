@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "envFile":"${workspaceFolder}/.env",
+  "configurations": [
+    {
+      "name": "Studdeo Odoo API",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"],
+      "jinja": true,
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      },
+      "console": "integratedTerminal"
+    }
+  ]
+}
