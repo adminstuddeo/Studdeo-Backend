@@ -10,7 +10,8 @@ from app.configuration import configuration
 from app.database.models import User
 from app.error import BadPassword, BadToken, UserNotFound
 from app.repositories import InterfaceUserRepository
-from app.schemas import Teacher, Token
+from app.schemas import Token
+from app.schemas import User as UserDTO
 
 from .security_service import SecurityService
 
@@ -25,7 +26,7 @@ class AuthService:
     async def auth_user(self, email: str, password: str) -> Token:
         user: Optional[User] = await self.repository.get_user_by_email(email=email)
 
-        if not user:
+        if not user or not user.is_active:
             raise UserNotFound()
 
         if not self.security_service.verify_password(
@@ -33,7 +34,7 @@ class AuthService:
         ):
             raise BadPassword()
 
-        user_information: Teacher = Teacher.model_validate(obj=user)
+        user_information: UserDTO = UserDTO.model_validate(obj=user)
 
         return self.create_access_token(user_data=user_information)
 

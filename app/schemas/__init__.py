@@ -1,20 +1,19 @@
-from .buyer import Buyer
 from .contract import Contract
-from .course import Course, CourseDB
+from .course import CourseDB
 from .lesson import Lesson
-from .sale import Sale
-from .teacher import Teacher
+from .odoo import CourseOdoo, LessonOdoo, TeacherOdoo
+from .student import Student
 from .token import Token
 from .user import User, UserContract, UserCreate, UserDB
 
 __all__: list[str] = [
-    "Buyer",
     "Contract",
-    "Course",
     "CourseDB",
+    "CourseOdoo",
     "Lesson",
-    "Sale",
-    "Teacher",
+    "LessonOdoo",
+    "Student",
+    "TeacherOdoo",
     "Token",
     "User",
     "UserDB",

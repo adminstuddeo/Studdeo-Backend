@@ -13,7 +13,7 @@ from .dependencies import get_auth_service
 auth_router: APIRouter = APIRouter(prefix="/auth", tags=["Authenticacion"])
 
 
-@auth_router.post("/login", response_model=Token)
+@auth_router.post(path="/login", response_model=Token)
 async def login_user(
     user_login: OAuth2PasswordRequestForm = Depends(),
     auth_service: AuthService = Depends(dependency=get_auth_service),

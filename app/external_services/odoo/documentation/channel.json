@@ -1,0 +1,562 @@
+{
+    "website_id": {
+        "help": "Restrict to a specific website.",
+        "relation": "website",
+        "string": "Website",
+        "type": "many2one"
+    },
+    "website_published": {
+        "string": "Visible on current website",
+        "type": "boolean"
+    },
+    "is_published": {
+        "string": "Is Published",
+        "type": "boolean"
+    },
+    "can_publish": {
+        "string": "Can Publish",
+        "type": "boolean"
+    },
+    "website_url": {
+        "help": "The full URL to access the document through the website.",
+        "string": "Website URL",
+        "type": "char"
+    },
+    "is_seo_optimized": {
+        "string": "SEO optimized",
+        "type": "boolean"
+    },
+    "website_meta_title": {
+        "string": "Website meta title",
+        "type": "char"
+    },
+    "website_meta_description": {
+        "string": "Website meta description",
+        "type": "text"
+    },
+    "website_meta_keywords": {
+        "string": "Website meta keywords",
+        "type": "char"
+    },
+    "website_meta_og_img": {
+        "string": "Website opengraph image",
+        "type": "char"
+    },
+    "seo_name": {
+        "string": "Seo name",
+        "type": "char"
+    },
+    "cover_properties": {
+        "string": "Cover Properties",
+        "type": "text"
+    },
+    "image_1920": {
+        "string": "Image",
+        "type": "binary"
+    },
+    "image_1024": {
+        "string": "Image 1024",
+        "type": "binary"
+    },
+    "image_512": {
+        "string": "Image 512",
+        "type": "binary"
+    },
+    "image_256": {
+        "string": "Image 256",
+        "type": "binary"
+    },
+    "image_128": {
+        "string": "Image 128",
+        "type": "binary"
+    },
+    "activity_ids": {
+        "relation": "mail.activity",
+        "string": "Activities",
+        "type": "one2many"
+    },
+    "activity_state": {
+        "help": "Status based on activities\nOverdue: Due date is already passed\nToday: Activity date is today\nPlanned: Future activities.",
+        "string": "Activity State",
+        "type": "selection"
+    },
+    "activity_user_id": {
+        "relation": "res.users",
+        "string": "Responsible User",
+        "type": "many2one"
+    },
+    "activity_type_id": {
+        "relation": "mail.activity.type",
+        "string": "Next Activity Type",
+        "type": "many2one"
+    },
+    "activity_type_icon": {
+        "help": "Font awesome icon e.g. fa-tasks",
+        "string": "Activity Type Icon",
+        "type": "char"
+    },
+    "activity_date_deadline": {
+        "string": "Next Activity Deadline",
+        "type": "date"
+    },
+    "my_activity_date_deadline": {
+        "string": "My Activity Deadline",
+        "type": "date"
+    },
+    "activity_summary": {
+        "string": "Next Activity Summary",
+        "type": "char"
+    },
+    "activity_exception_decoration": {
+        "help": "Type of the exception activity on record.",
+        "string": "Activity Exception Decoration",
+        "type": "selection"
+    },
+    "activity_exception_icon": {
+        "help": "Icon to indicate an exception activity.",
+        "string": "Icon",
+        "type": "char"
+    },
+    "activity_calendar_event_id": {
+        "relation": "calendar.event",
+        "string": "Next Activity Calendar Event",
+        "type": "many2one"
+    },
+    "message_is_follower": {
+        "string": "Is Follower",
+        "type": "boolean"
+    },
+    "message_follower_ids": {
+        "relation": "mail.followers",
+        "string": "Followers",
+        "type": "one2many"
+    },
+    "message_partner_ids": {
+        "relation": "res.partner",
+        "string": "Followers (Partners)",
+        "type": "many2many"
+    },
+    "message_ids": {
+        "relation": "mail.message",
+        "string": "Messages",
+        "type": "one2many"
+    },
+    "has_message": {
+        "string": "Has Message",
+        "type": "boolean"
+    },
+    "message_needaction": {
+        "help": "If checked, new messages require your attention.",
+        "string": "Action Needed",
+        "type": "boolean"
+    },
+    "message_needaction_counter": {
+        "help": "Number of messages requiring action",
+        "string": "Number of Actions",
+        "type": "integer"
+    },
+    "message_has_error": {
+        "help": "If checked, some messages have a delivery error.",
+        "string": "Message Delivery error",
+        "type": "boolean"
+    },
+    "message_has_error_counter": {
+        "help": "Number of messages with delivery error",
+        "string": "Number of errors",
+        "type": "integer"
+    },
+    "message_attachment_count": {
+        "string": "Attachment Count",
+        "type": "integer"
+    },
+    "rating_ids": {
+        "relation": "rating.rating",
+        "string": "Ratings",
+        "type": "one2many"
+    },
+    "website_message_ids": {
+        "help": "Website communication history",
+        "relation": "mail.message",
+        "string": "Website Messages",
+        "type": "one2many"
+    },
+    "message_has_sms_error": {
+        "help": "If checked, some messages have a delivery error.",
+        "string": "SMS Delivery error",
+        "type": "boolean"
+    },
+    "rating_last_value": {
+        "string": "Rating Last Value",
+        "type": "float"
+    },
+    "rating_last_feedback": {
+        "string": "Rating Last Feedback",
+        "type": "text"
+    },
+    "rating_last_image": {
+        "string": "Rating Last Image",
+        "type": "binary"
+    },
+    "rating_count": {
+        "string": "Rating count",
+        "type": "integer"
+    },
+    "rating_avg": {
+        "string": "Average Rating",
+        "type": "float"
+    },
+    "rating_avg_text": {
+        "string": "Rating Avg Text",
+        "type": "selection"
+    },
+    "rating_percentage_satisfaction": {
+        "string": "Rating Satisfaction",
+        "type": "float"
+    },
+    "rating_last_text": {
+        "string": "Rating Text",
+        "type": "selection"
+    },
+    "name": {
+        "string": "Name",
+        "type": "char"
+    },
+    "active": {
+        "string": "Active",
+        "type": "boolean"
+    },
+    "description": {
+        "help": "The description that is displayed on top of the course page, just below the title",
+        "string": "Description",
+        "type": "html"
+    },
+    "description_short": {
+        "help": "The description that is displayed on the course card",
+        "string": "Short Description",
+        "type": "html"
+    },
+    "description_html": {
+        "string": "Detailed Description",
+        "type": "html"
+    },
+    "channel_type": {
+        "string": "Course type",
+        "type": "selection"
+    },
+    "sequence": {
+        "string": "Sequence",
+        "type": "integer"
+    },
+    "user_id": {
+        "relation": "res.users",
+        "string": "Responsible",
+        "type": "many2one"
+    },
+    "color": {
+        "help": "Used to decorate kanban view",
+        "string": "Color Index",
+        "type": "integer"
+    },
+    "tag_ids": {
+        "help": "Used to categorize and filter displayed channels/courses",
+        "relation": "slide.channel.tag",
+        "string": "Tags",
+        "type": "many2many"
+    },
+    "slide_ids": {
+        "relation": "slide.slide",
+        "string": "Slides and categories",
+        "type": "one2many"
+    },
+    "slide_content_ids": {
+        "relation": "slide.slide",
+        "string": "Content",
+        "type": "one2many"
+    },
+    "slide_category_ids": {
+        "relation": "slide.slide",
+        "string": "Categories",
+        "type": "one2many"
+    },
+    "slide_last_update": {
+        "string": "Last Update",
+        "type": "date"
+    },
+    "slide_partner_ids": {
+        "relation": "slide.slide.partner",
+        "string": "Slide User Data",
+        "type": "one2many"
+    },
+    "promote_strategy": {
+        "help": "Defines the content that will be promoted on the course home page",
+        "string": "Featured Content",
+        "type": "selection"
+    },
+    "promoted_slide_id": {
+        "relation": "slide.slide",
+        "string": "Promoted Slide",
+        "type": "many2one"
+    },
+    "access_token": {
+        "string": "Security Token",
+        "type": "char"
+    },
+    "nbr_document": {
+        "string": "Documents",
+        "type": "integer"
+    },
+    "nbr_video": {
+        "string": "Videos",
+        "type": "integer"
+    },
+    "nbr_infographic": {
+        "string": "Infographics",
+        "type": "integer"
+    },
+    "nbr_article": {
+        "string": "Articles",
+        "type": "integer"
+    },
+    "nbr_quiz": {
+        "string": "Number of Quizs",
+        "type": "integer"
+    },
+    "total_slides": {
+        "string": "Number of Contents",
+        "type": "integer"
+    },
+    "total_views": {
+        "string": "Visits",
+        "type": "integer"
+    },
+    "total_votes": {
+        "string": "Votes",
+        "type": "integer"
+    },
+    "total_time": {
+        "string": "Duration",
+        "type": "float"
+    },
+    "rating_avg_stars": {
+        "string": "Rating Average (Stars)",
+        "type": "float"
+    },
+    "allow_comment": {
+        "help": "Allow Attendees to like and comment your content and to submit reviews on your course.",
+        "string": "Allow rating on Course",
+        "type": "boolean"
+    },
+    "publish_template_id": {
+        "help": "Defines the email your Attendees will receive each time you upload new content.",
+        "relation": "mail.template",
+        "string": "New Content Notification",
+        "type": "many2one"
+    },
+    "share_channel_template_id": {
+        "help": "Email template used when sharing a channel",
+        "relation": "mail.template",
+        "string": "Channel Share Template",
+        "type": "many2one"
+    },
+    "share_slide_template_id": {
+        "help": "Email template used when sharing a slide",
+        "relation": "mail.template",
+        "string": "Share Template",
+        "type": "many2one"
+    },
+    "completed_template_id": {
+        "help": "Defines the email your Attendees will receive once they reach the end of your course.",
+        "relation": "mail.template",
+        "string": "Completion Notification",
+        "type": "many2one"
+    },
+    "enroll": {
+        "help": "Defines how people can enroll to your Course.",
+        "string": "Enroll Policy",
+        "type": "selection"
+    },
+    "enroll_msg": {
+        "help": "Message explaining the enroll process",
+        "string": "Enroll Message",
+        "type": "html"
+    },
+    "enroll_group_ids": {
+        "help": "Members of those groups are automatically added as members of the channel.",
+        "relation": "res.groups",
+        "string": "Auto Enroll Groups",
+        "type": "many2many"
+    },
+    "visibility": {
+        "help": "Defines who can access your courses and their content.",
+        "string": "Show Course To",
+        "type": "selection"
+    },
+    "upload_group_ids": {
+        "help": "Group of users allowed to publish contents on a documentation course.",
+        "relation": "res.groups",
+        "string": "Upload Groups",
+        "type": "many2many"
+    },
+    "website_default_background_image_url": {
+        "string": "Background image URL",
+        "type": "char"
+    },
+    "channel_partner_ids": {
+        "relation": "slide.channel.partner",
+        "string": "Enrolled Attendees Information",
+        "type": "one2many"
+    },
+    "channel_partner_all_ids": {
+        "relation": "slide.channel.partner",
+        "string": "All Attendees Information",
+        "type": "one2many"
+    },
+    "members_count": {
+        "string": "# Enrolled Attendees",
+        "type": "integer"
+    },
+    "members_all_count": {
+        "string": "# Enrolled or Invited Attendees",
+        "type": "integer"
+    },
+    "members_engaged_count": {
+        "help": "Active attendees include both joined and ongoing attendees.",
+        "string": "# Active Attendees",
+        "type": "integer"
+    },
+    "members_completed_count": {
+        "string": "# Completed Attendees",
+        "type": "integer"
+    },
+    "members_invited_count": {
+        "string": "# Invited Attendees",
+        "type": "integer"
+    },
+    "partner_ids": {
+        "help": "Enrolled partners in the course",
+        "relation": "res.partner",
+        "string": "Attendees",
+        "type": "many2many"
+    },
+    "completed": {
+        "string": "Done",
+        "type": "boolean"
+    },
+    "completion": {
+        "string": "Completion",
+        "type": "integer"
+    },
+    "can_upload": {
+        "string": "Can Upload",
+        "type": "boolean"
+    },
+    "has_requested_access": {
+        "string": "Access Requested",
+        "type": "boolean"
+    },
+    "is_member": {
+        "help": "Is the attendee actively enrolled.",
+        "string": "Is Enrolled Attendee",
+        "type": "boolean"
+    },
+    "is_member_invited": {
+        "help": "Is the invitation for this attendee pending.",
+        "string": "Is Invited Attendee",
+        "type": "boolean"
+    },
+    "partner_has_new_content": {
+        "string": "Partner Has New Content",
+        "type": "boolean"
+    },
+    "karma_gen_channel_rank": {
+        "string": "Course ranked",
+        "type": "integer"
+    },
+    "karma_gen_channel_finish": {
+        "string": "Course finished",
+        "type": "integer"
+    },
+    "karma_review": {
+        "help": "Karma needed to add a review on the course",
+        "string": "Add Review",
+        "type": "integer"
+    },
+    "karma_slide_comment": {
+        "help": "Karma needed to add a comment on a slide of this course",
+        "string": "Add Comment",
+        "type": "integer"
+    },
+    "karma_slide_vote": {
+        "help": "Karma needed to like/dislike a slide of this course.",
+        "string": "Vote",
+        "type": "integer"
+    },
+    "can_review": {
+        "string": "Can Review",
+        "type": "boolean"
+    },
+    "can_comment": {
+        "string": "Can Comment",
+        "type": "boolean"
+    },
+    "can_vote": {
+        "string": "Can Vote",
+        "type": "boolean"
+    },
+    "prerequisite_channel_ids": {
+        "help": "Prerequisite courses to complete before accessing this one.",
+        "relation": "slide.channel",
+        "string": "Prerequisites",
+        "type": "many2many"
+    },
+    "prerequisite_of_channel_ids": {
+        "help": "Courses that have this course as prerequisite.",
+        "relation": "slide.channel",
+        "string": "Prerequisite Of",
+        "type": "many2many"
+    },
+    "prerequisite_user_has_completed": {
+        "string": "Has Completed Prerequisite",
+        "type": "boolean"
+    },
+    "id": {
+        "string": "ID",
+        "type": "integer"
+    },
+    "display_name": {
+        "string": "Display Name",
+        "type": "char"
+    },
+    "create_uid": {
+        "relation": "res.users",
+        "string": "Created by",
+        "type": "many2one"
+    },
+    "create_date": {
+        "string": "Created on",
+        "type": "datetime"
+    },
+    "write_uid": {
+        "relation": "res.users",
+        "string": "Last Updated by",
+        "type": "many2one"
+    },
+    "write_date": {
+        "string": "Last Updated on",
+        "type": "datetime"
+    },
+    "product_id": {
+        "relation": "product.product",
+        "string": "Product",
+        "type": "many2one"
+    },
+    "product_sale_revenues": {
+        "string": "Total revenues",
+        "type": "monetary"
+    },
+    "currency_id": {
+        "relation": "res.currency",
+        "string": "Currency",
+        "type": "many2one"
+    }
+}

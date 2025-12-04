@@ -1,0 +1,1579 @@
+{
+    "partner_id": {
+        "help": "Partner-related data of the user",
+        "relation": "res.partner",
+        "string": "Related Partner",
+        "type": "many2one"
+    },
+    "login": {
+        "help": "Used to log into the system",
+        "string": "Login",
+        "type": "char"
+    },
+    "password": {
+        "help": "Keep empty if you dont want the user to be able to connect on the system.",
+        "string": "Password",
+        "type": "char"
+    },
+    "new_password": {
+        "help": "Specify a value only when creating a user or if youre changing the users password, otherwise leave empty. After a change of password, the user has to login again.",
+        "string": "Set Password",
+        "type": "char"
+    },
+    "signature": {
+        "string": "Email Signature",
+        "type": "html"
+    },
+    "active": {
+        "string": "Active",
+        "type": "boolean"
+    },
+    "active_partner": {
+        "string": "Partner is Active",
+        "type": "boolean"
+    },
+    "action_id": {
+        "help": "If specified, this action will be opened at log on for this user, in addition to the standard menu.",
+        "relation": "ir.actions.actions",
+        "string": "Home Action",
+        "type": "many2one"
+    },
+    "groups_id": {
+        "relation": "res.groups",
+        "string": "Groups",
+        "type": "many2many"
+    },
+    "log_ids": {
+        "relation": "res.users.log",
+        "string": "User log entries",
+        "type": "one2many"
+    },
+    "device_ids": {
+        "relation": "res.device",
+        "string": "User devices",
+        "type": "one2many"
+    },
+    "login_date": {
+        "string": "Latest authentication",
+        "type": "datetime"
+    },
+    "share": {
+        "help": "External user with limited access, created only for the purpose of sharing data.",
+        "string": "Share User",
+        "type": "boolean"
+    },
+    "companies_count": {
+        "string": "Number of Companies",
+        "type": "integer"
+    },
+    "tz_offset": {
+        "string": "Timezone offset",
+        "type": "char"
+    },
+    "res_users_settings_ids": {
+        "relation": "res.users.settings",
+        "string": "Res Users Settings",
+        "type": "one2many"
+    },
+    "res_users_settings_id": {
+        "relation": "res.users.settings",
+        "string": "Settings",
+        "type": "many2one"
+    },
+    "company_id": {
+        "help": "The default company for this user.",
+        "relation": "res.company",
+        "string": "Company",
+        "type": "many2one"
+    },
+    "company_ids": {
+        "relation": "res.company",
+        "string": "Companies",
+        "type": "many2many"
+    },
+    "name": {
+        "string": "Name",
+        "type": "char"
+    },
+    "email": {
+        "string": "Email",
+        "type": "char"
+    },
+    "accesses_count": {
+        "help": "Number of access rights that apply to the current user",
+        "string": "# Access Rights",
+        "type": "integer"
+    },
+    "rules_count": {
+        "help": "Number of record rules that apply to the current user",
+        "string": "# Record Rules",
+        "type": "integer"
+    },
+    "groups_count": {
+        "help": "Number of groups that apply to the current user",
+        "string": "# Groups",
+        "type": "integer"
+    },
+    "id": {
+        "string": "ID",
+        "type": "integer"
+    },
+    "display_name": {
+        "string": "Display Name",
+        "type": "char"
+    },
+    "create_uid": {
+        "relation": "res.users",
+        "string": "Created by",
+        "type": "many2one"
+    },
+    "create_date": {
+        "string": "Created on",
+        "type": "datetime"
+    },
+    "write_uid": {
+        "relation": "res.users",
+        "string": "Last Updated by",
+        "type": "many2one"
+    },
+    "write_date": {
+        "string": "Last Updated on",
+        "type": "datetime"
+    },
+    "user_group_warning": {
+        "string": "User Group Warning",
+        "type": "text"
+    },
+    "api_key_ids": {
+        "relation": "res.users.apikeys",
+        "string": "API Keys",
+        "type": "one2many"
+    },
+    "totp_enabled": {
+        "string": "Two-factor authentication",
+        "type": "boolean"
+    },
+    "totp_trusted_device_ids": {
+        "relation": "auth_totp.device",
+        "string": "Trusted Devices",
+        "type": "one2many"
+    },
+    "im_status": {
+        "string": "IM Status",
+        "type": "char"
+    },
+    "resource_ids": {
+        "relation": "resource.resource",
+        "string": "Resources",
+        "type": "one2many"
+    },
+    "resource_calendar_id": {
+        "help": "Define the working schedule of the resource. If not set, the resource will have fully flexible working hours.",
+        "relation": "resource.calendar",
+        "string": "Default Working Hours",
+        "type": "many2one"
+    },
+    "tour_enabled": {
+        "string": "Onboarding",
+        "type": "boolean"
+    },
+    "notification_type": {
+        "help": "Policy on how to handle Chatter notifications:\n- Handle by Emails: notifications are sent to your email address\n- Handle in Odoo: notifications appear in your Odoo Inbox",
+        "string": "Notification",
+        "type": "selection"
+    },
+    "state": {
+        "string": "Status",
+        "type": "selection"
+    },
+    "calendar_default_privacy": {
+        "string": "Calendar Default Privacy",
+        "type": "selection"
+    },
+    "karma": {
+        "string": "Karma",
+        "type": "integer"
+    },
+    "karma_tracking_ids": {
+        "relation": "gamification.karma.tracking",
+        "string": "Karma Changes",
+        "type": "one2many"
+    },
+    "badge_ids": {
+        "relation": "gamification.badge.user",
+        "string": "Badges",
+        "type": "one2many"
+    },
+    "gold_badge": {
+        "string": "Gold badges count",
+        "type": "integer"
+    },
+    "silver_badge": {
+        "string": "Silver badges count",
+        "type": "integer"
+    },
+    "bronze_badge": {
+        "string": "Bronze badges count",
+        "type": "integer"
+    },
+    "rank_id": {
+        "relation": "gamification.karma.rank",
+        "string": "Rank",
+        "type": "many2one"
+    },
+    "next_rank_id": {
+        "relation": "gamification.karma.rank",
+        "string": "Next Rank",
+        "type": "many2one"
+    },
+    "odoobot_state": {
+        "string": "OdooBot Status",
+        "type": "selection"
+    },
+    "odoobot_failed": {
+        "string": "Odoobot Failed",
+        "type": "boolean"
+    },
+    "crm_team_ids": {
+        "relation": "crm.team",
+        "string": "Sales Teams",
+        "type": "many2many"
+    },
+    "crm_team_member_ids": {
+        "relation": "crm.team.member",
+        "string": "Sales Team Members",
+        "type": "one2many"
+    },
+    "sale_team_id": {
+        "help": "Main user sales team. Used notably for pipeline, or to set sales team in invoicing or subscription.",
+        "relation": "crm.team",
+        "string": "User Sales Team",
+        "type": "many2one"
+    },
+    "oauth_provider_id": {
+        "relation": "auth.oauth.provider",
+        "string": "OAuth Provider",
+        "type": "many2one"
+    },
+    "oauth_uid": {
+        "help": "Oauth Provider user_id",
+        "string": "OAuth User ID",
+        "type": "char"
+    },
+    "oauth_access_token": {
+        "string": "OAuth Access Token",
+        "type": "char"
+    },
+    "google_calendar_rtoken": {
+        "string": "Refresh Token",
+        "type": "char"
+    },
+    "google_calendar_token": {
+        "string": "User token",
+        "type": "char"
+    },
+    "google_calendar_token_validity": {
+        "string": "Token Validity",
+        "type": "datetime"
+    },
+    "google_calendar_sync_token": {
+        "string": "Next Sync Token",
+        "type": "char"
+    },
+    "google_calendar_cal_id": {
+        "help": "Last Calendar ID who has been synchronized. If it is changed, we remove all links between GoogleID and Odoo Google Internal ID",
+        "string": "Calendar ID",
+        "type": "char"
+    },
+    "google_synchronization_stopped": {
+        "string": "Google Synchronization stopped",
+        "type": "boolean"
+    },
+    "target_sales_won": {
+        "string": "Won in Opportunities Target",
+        "type": "integer"
+    },
+    "target_sales_done": {
+        "string": "Activities Done Target",
+        "type": "integer"
+    },
+    "website_id": {
+        "help": "Restrict to a specific website.",
+        "relation": "website",
+        "string": "Website",
+        "type": "many2one"
+    },
+    "target_sales_invoiced": {
+        "string": "Invoiced in Sales Orders Target",
+        "type": "integer"
+    },
+    "is_seo_optimized": {
+        "string": "SEO optimized",
+        "type": "boolean"
+    },
+    "website_meta_title": {
+        "string": "Website meta title",
+        "type": "char"
+    },
+    "website_meta_description": {
+        "string": "Website meta description",
+        "type": "text"
+    },
+    "website_meta_keywords": {
+        "string": "Website meta keywords",
+        "type": "char"
+    },
+    "website_meta_og_img": {
+        "string": "Website opengraph image",
+        "type": "char"
+    },
+    "seo_name": {
+        "string": "Seo name",
+        "type": "char"
+    },
+    "website_published": {
+        "string": "Visible on current website",
+        "type": "boolean"
+    },
+    "is_published": {
+        "string": "Is Published",
+        "type": "boolean"
+    },
+    "can_publish": {
+        "string": "Can Publish",
+        "type": "boolean"
+    },
+    "website_url": {
+        "help": "The full URL to access the document through the website.",
+        "string": "Website URL",
+        "type": "char"
+    },
+    "message_is_follower": {
+        "string": "Is Follower",
+        "type": "boolean"
+    },
+    "message_follower_ids": {
+        "relation": "mail.followers",
+        "string": "Followers",
+        "type": "one2many"
+    },
+    "message_partner_ids": {
+        "relation": "res.partner",
+        "string": "Followers (Partners)",
+        "type": "many2many"
+    },
+    "message_ids": {
+        "relation": "mail.message",
+        "string": "Messages",
+        "type": "one2many"
+    },
+    "has_message": {
+        "string": "Has Message",
+        "type": "boolean"
+    },
+    "message_needaction": {
+        "help": "If checked, new messages require your attention.",
+        "string": "Action Needed",
+        "type": "boolean"
+    },
+    "message_needaction_counter": {
+        "help": "Number of messages requiring action",
+        "string": "Number of Actions",
+        "type": "integer"
+    },
+    "message_has_error": {
+        "help": "If checked, some messages have a delivery error.",
+        "string": "Message Delivery error",
+        "type": "boolean"
+    },
+    "message_has_error_counter": {
+        "help": "Number of messages with delivery error",
+        "string": "Number of errors",
+        "type": "integer"
+    },
+    "message_attachment_count": {
+        "string": "Attachment Count",
+        "type": "integer"
+    },
+    "rating_ids": {
+        "relation": "rating.rating",
+        "string": "Ratings",
+        "type": "one2many"
+    },
+    "website_message_ids": {
+        "help": "Website communication history",
+        "relation": "mail.message",
+        "string": "Website Messages",
+        "type": "one2many"
+    },
+    "message_has_sms_error": {
+        "help": "If checked, some messages have a delivery error.",
+        "string": "SMS Delivery error",
+        "type": "boolean"
+    },
+    "email_normalized": {
+        "help": "This field is used to search on email address as the primary email field can contain more than strictly an email address.",
+        "string": "Normalized Email",
+        "type": "char"
+    },
+    "is_blacklisted": {
+        "help": "If the email address is on the blacklist, the contact wont receive mass mailing anymore, from any list",
+        "string": "Blacklist",
+        "type": "boolean"
+    },
+    "message_bounce": {
+        "help": "Counter of the number of bounced emails for this contact",
+        "string": "Bounce",
+        "type": "integer"
+    },
+    "activity_ids": {
+        "relation": "mail.activity",
+        "string": "Activities",
+        "type": "one2many"
+    },
+    "activity_state": {
+        "help": "Status based on activities\nOverdue: Due date is already passed\nToday: Activity date is today\nPlanned: Future activities.",
+        "string": "Activity State",
+        "type": "selection"
+    },
+    "activity_user_id": {
+        "relation": "res.users",
+        "string": "Responsible User",
+        "type": "many2one"
+    },
+    "activity_type_id": {
+        "relation": "mail.activity.type",
+        "string": "Next Activity Type",
+        "type": "many2one"
+    },
+    "activity_type_icon": {
+        "help": "Font awesome icon e.g. fa-tasks",
+        "string": "Activity Type Icon",
+        "type": "char"
+    },
+    "activity_date_deadline": {
+        "string": "Next Activity Deadline",
+        "type": "date"
+    },
+    "my_activity_date_deadline": {
+        "string": "My Activity Deadline",
+        "type": "date"
+    },
+    "activity_summary": {
+        "string": "Next Activity Summary",
+        "type": "char"
+    },
+    "activity_exception_decoration": {
+        "help": "Type of the exception activity on record.",
+        "string": "Activity Exception Decoration",
+        "type": "selection"
+    },
+    "activity_exception_icon": {
+        "help": "Icon to indicate an exception activity.",
+        "string": "Icon",
+        "type": "char"
+    },
+    "activity_calendar_event_id": {
+        "relation": "calendar.event",
+        "string": "Next Activity Calendar Event",
+        "type": "many2one"
+    },
+    "image_1920": {
+        "string": "Image",
+        "type": "binary"
+    },
+    "image_1024": {
+        "string": "Image 1024",
+        "type": "binary"
+    },
+    "image_512": {
+        "string": "Image 512",
+        "type": "binary"
+    },
+    "image_256": {
+        "string": "Image 256",
+        "type": "binary"
+    },
+    "image_128": {
+        "string": "Image 128",
+        "type": "binary"
+    },
+    "avatar_1920": {
+        "string": "Avatar",
+        "type": "binary"
+    },
+    "avatar_1024": {
+        "string": "Avatar 1024",
+        "type": "binary"
+    },
+    "avatar_512": {
+        "string": "Avatar 512",
+        "type": "binary"
+    },
+    "avatar_256": {
+        "string": "Avatar 256",
+        "type": "binary"
+    },
+    "avatar_128": {
+        "string": "Avatar 128",
+        "type": "binary"
+    },
+    "complete_name": {
+        "string": "Complete Name",
+        "type": "char"
+    },
+    "title": {
+        "relation": "res.partner.title",
+        "string": "Title",
+        "type": "many2one"
+    },
+    "parent_id": {
+        "relation": "res.partner",
+        "string": "Related Company",
+        "type": "many2one"
+    },
+    "parent_name": {
+        "string": "Parent name",
+        "type": "char"
+    },
+    "child_ids": {
+        "relation": "res.partner",
+        "string": "Contact",
+        "type": "one2many"
+    },
+    "ref": {
+        "string": "Reference",
+        "type": "char"
+    },
+    "lang": {
+        "help": "All the emails and documents sent to this contact will be translated in this language.",
+        "string": "Language",
+        "type": "selection"
+    },
+    "active_lang_count": {
+        "string": "Active Lang Count",
+        "type": "integer"
+    },
+    "tz": {
+        "help": "When printing documents and exporting/importing data, time values are computed according to this timezone.\nIf the timezone is not set, UTC (Coordinated Universal Time) is used.\nAnywhere else, time values are computed according to the time offset of your web client.",
+        "string": "Timezone",
+        "type": "selection"
+    },
+    "user_id": {
+        "help": "The internal user in charge of this contact.",
+        "relation": "res.users",
+        "string": "Salesperson",
+        "type": "many2one"
+    },
+    "vat": {
+        "help": "Identification Number for selected type",
+        "string": "Identification Number",
+        "type": "char"
+    },
+    "vat_label": {
+        "string": "Tax ID Label",
+        "type": "char"
+    },
+    "same_vat_partner_id": {
+        "relation": "res.partner",
+        "string": "Partner with same Tax ID",
+        "type": "many2one"
+    },
+    "same_company_registry_partner_id": {
+        "relation": "res.partner",
+        "string": "Partner with same Company Registry",
+        "type": "many2one"
+    },
+    "company_registry": {
+        "help": "The registry number of the company. Use it if it is different from the Tax ID. It must be unique across all partners of a same country",
+        "string": "Company ID",
+        "type": "char"
+    },
+    "company_registry_label": {
+        "string": "Company ID Label",
+        "type": "char"
+    },
+    "bank_ids": {
+        "relation": "res.partner.bank",
+        "string": "Banks",
+        "type": "one2many"
+    },
+    "website": {
+        "string": "Website Link",
+        "type": "char"
+    },
+    "comment": {
+        "string": "Notes",
+        "type": "html"
+    },
+    "category_id": {
+        "relation": "res.partner.category",
+        "string": "Tags",
+        "type": "many2many"
+    },
+    "employee": {
+        "help": "Check this box if this contact is an Employee.",
+        "string": "Employee",
+        "type": "boolean"
+    },
+    "function": {
+        "string": "Job Position",
+        "type": "char"
+    },
+    "type": {
+        "string": "Address Type",
+        "type": "selection"
+    },
+    "street": {
+        "string": "Street",
+        "type": "char"
+    },
+    "street2": {
+        "string": "Street2",
+        "type": "char"
+    },
+    "zip": {
+        "string": "Zip",
+        "type": "char"
+    },
+    "city": {
+        "string": "City",
+        "type": "char"
+    },
+    "state_id": {
+        "relation": "res.country.state",
+        "string": "State",
+        "type": "many2one"
+    },
+    "country_id": {
+        "relation": "res.country",
+        "string": "Country",
+        "type": "many2one"
+    },
+    "country_code": {
+        "help": "The ISO country code in two chars. \nYou can use this field for quick search.",
+        "string": "Country Code",
+        "type": "char"
+    },
+    "partner_latitude": {
+        "string": "Geo Latitude",
+        "type": "float"
+    },
+    "partner_longitude": {
+        "string": "Geo Longitude",
+        "type": "float"
+    },
+    "email_formatted": {
+        "help": "Format email address Name <email@domain>",
+        "string": "Formatted Email",
+        "type": "char"
+    },
+    "phone": {
+        "string": "Phone",
+        "type": "char"
+    },
+    "mobile": {
+        "string": "Mobile",
+        "type": "char"
+    },
+    "is_company": {
+        "help": "Check if the contact is a company, otherwise it is a person",
+        "string": "Is a Company",
+        "type": "boolean"
+    },
+    "is_public": {
+        "string": "Is Public",
+        "type": "boolean"
+    },
+    "industry_id": {
+        "relation": "res.partner.industry",
+        "string": "Industry",
+        "type": "many2one"
+    },
+    "company_type": {
+        "string": "Company Type",
+        "type": "selection"
+    },
+    "color": {
+        "string": "Color Index",
+        "type": "integer"
+    },
+    "user_ids": {
+        "relation": "res.users",
+        "string": "Users",
+        "type": "one2many"
+    },
+    "partner_share": {
+        "help": "Either customer (not a user), either shared user. Indicated the current partner is a customer without access or with a limited access created for sharing data.",
+        "string": "Share Partner",
+        "type": "boolean"
+    },
+    "contact_address": {
+        "string": "Complete Address",
+        "type": "char"
+    },
+    "commercial_partner_id": {
+        "relation": "res.partner",
+        "string": "Commercial Entity",
+        "type": "many2one"
+    },
+    "commercial_company_name": {
+        "string": "Company Name Entity",
+        "type": "char"
+    },
+    "company_name": {
+        "string": "Company Name",
+        "type": "char"
+    },
+    "barcode": {
+        "help": "Use a barcode to identify this contact.",
+        "string": "Barcode",
+        "type": "char"
+    },
+    "self": {
+        "relation": "res.partner",
+        "string": "Self",
+        "type": "many2one"
+    },
+    "channel_ids": {
+        "relation": "discuss.channel",
+        "string": "Channels",
+        "type": "many2many"
+    },
+    "contact_address_inline": {
+        "string": "Inlined Complete Address",
+        "type": "char"
+    },
+    "starred_message_ids": {
+        "relation": "mail.message",
+        "string": "Starred Message",
+        "type": "many2many"
+    },
+    "signup_type": {
+        "string": "Signup Token Type",
+        "type": "char"
+    },
+    "meeting_count": {
+        "string": "# Meetings",
+        "type": "integer"
+    },
+    "meeting_ids": {
+        "relation": "calendar.event",
+        "string": "Meetings",
+        "type": "many2many"
+    },
+    "calendar_last_notif_ack": {
+        "string": "Last notification marked as read from base Calendar",
+        "type": "datetime"
+    },
+    "property_product_pricelist": {
+        "help": "This pricelist will be used, instead of the default one, for sales to the current partner",
+        "relation": "product.pricelist",
+        "string": "Pricelist",
+        "type": "many2one"
+    },
+    "specific_property_product_pricelist": {
+        "relation": "product.pricelist",
+        "string": "Specific Property Product Pricelist",
+        "type": "many2one"
+    },
+    "partner_gid": {
+        "string": "Company database ID",
+        "type": "integer"
+    },
+    "additional_info": {
+        "string": "Additional info",
+        "type": "char"
+    },
+    "phone_sanitized": {
+        "help": "Field used to store sanitized phone number. Helps speeding up searches and comparisons.",
+        "string": "Sanitized Number",
+        "type": "char"
+    },
+    "phone_sanitized_blacklisted": {
+        "help": "If the sanitized phone number is on the blacklist, the contact wont receive mass mailing sms anymore, from any list",
+        "string": "Phone Blacklisted",
+        "type": "boolean"
+    },
+    "phone_blacklisted": {
+        "help": "Indicates if a blacklisted sanitized phone number is a phone number. Helps distinguish which number is blacklisted             when there is both a mobile and phone field in a model.",
+        "string": "Blacklisted Phone is Phone",
+        "type": "boolean"
+    },
+    "mobile_blacklisted": {
+        "help": "Indicates if a blacklisted sanitized phone number is a mobile number. Helps distinguish which number is blacklisted             when there is both a mobile and phone field in a model.",
+        "string": "Blacklisted Phone Is Mobile",
+        "type": "boolean"
+    },
+    "phone_mobile_search": {
+        "string": "Phone/Mobile",
+        "type": "char"
+    },
+    "certifications_count": {
+        "string": "Certifications Count",
+        "type": "integer"
+    },
+    "certifications_company_count": {
+        "string": "Company Certifications Count",
+        "type": "integer"
+    },
+    "payment_token_ids": {
+        "relation": "payment.token",
+        "string": "Payment Tokens",
+        "type": "one2many"
+    },
+    "payment_token_count": {
+        "string": "Payment Token Count",
+        "type": "integer"
+    },
+    "fiscal_country_codes": {
+        "string": "Fiscal Country Codes",
+        "type": "char"
+    },
+    "partner_vat_placeholder": {
+        "string": "Partner Vat Placeholder",
+        "type": "char"
+    },
+    "partner_company_registry_placeholder": {
+        "string": "Partner Company Registry Placeholder",
+        "type": "char"
+    },
+    "duplicate_bank_partner_ids": {
+        "relation": "res.partner",
+        "string": "Duplicate Bank Partner",
+        "type": "many2many"
+    },
+    "credit": {
+        "help": "Total amount this customer owes you.",
+        "string": "Total Receivable",
+        "type": "monetary"
+    },
+    "credit_to_invoice": {
+        "string": "Credit To Invoice",
+        "type": "monetary"
+    },
+    "credit_limit": {
+        "help": "Credit limit specific to this partner.",
+        "string": "Credit Limit",
+        "type": "float"
+    },
+    "use_partner_credit_limit": {
+        "help": "Set a value greater than 0.0 to activate a credit limit check",
+        "string": "Partner Limit",
+        "type": "boolean"
+    },
+    "show_credit_limit": {
+        "string": "Show Credit Limit",
+        "type": "boolean"
+    },
+    "days_sales_outstanding": {
+        "help": "[(Total Receivable/Total Revenue) * number of days since the first invoice] for this customer",
+        "string": "Days Sales Outstanding (DSO)",
+        "type": "float"
+    },
+    "debit": {
+        "help": "Total amount you have to pay to this vendor.",
+        "string": "Total Payable",
+        "type": "monetary"
+    },
+    "debit_limit": {
+        "string": "Payable Limit",
+        "type": "monetary"
+    },
+    "total_invoiced": {
+        "string": "Total Invoiced",
+        "type": "monetary"
+    },
+    "currency_id": {
+        "relation": "res.currency",
+        "string": "Currency",
+        "type": "many2one"
+    },
+    "journal_item_count": {
+        "string": "Journal Items",
+        "type": "integer"
+    },
+    "property_account_payable_id": {
+        "help": "This account will be used instead of the default one as the payable account for the current partner",
+        "relation": "account.account",
+        "string": "Account Payable",
+        "type": "many2one"
+    },
+    "property_account_receivable_id": {
+        "help": "This account will be used instead of the default one as the receivable account for the current partner",
+        "relation": "account.account",
+        "string": "Account Receivable",
+        "type": "many2one"
+    },
+    "property_account_position_id": {
+        "help": "The fiscal position determines the taxes/accounts used for this contact.",
+        "relation": "account.fiscal.position",
+        "string": "Fiscal Position",
+        "type": "many2one"
+    },
+    "property_payment_term_id": {
+        "help": "This payment term will be used instead of the default one for sales orders and customer invoices",
+        "relation": "account.payment.term",
+        "string": "Customer Payment Terms",
+        "type": "many2one"
+    },
+    "property_supplier_payment_term_id": {
+        "help": "This payment term will be used instead of the default one for purchase orders and vendor bills",
+        "relation": "account.payment.term",
+        "string": "Vendor Payment Terms",
+        "type": "many2one"
+    },
+    "ref_company_ids": {
+        "relation": "res.company",
+        "string": "Companies that refers to partner",
+        "type": "one2many"
+    },
+    "supplier_invoice_count": {
+        "string": "# Vendor Bills",
+        "type": "integer"
+    },
+    "invoice_ids": {
+        "relation": "account.move",
+        "string": "Invoices",
+        "type": "one2many"
+    },
+    "contract_ids": {
+        "relation": "account.analytic.account",
+        "string": "Partner Contracts",
+        "type": "one2many"
+    },
+    "bank_account_count": {
+        "string": "Bank",
+        "type": "integer"
+    },
+    "trust": {
+        "string": "Degree of trust you have in this debtor",
+        "type": "selection"
+    },
+    "ignore_abnormal_invoice_date": {
+        "string": "Ignore Abnormal Invoice Date",
+        "type": "boolean"
+    },
+    "ignore_abnormal_invoice_amount": {
+        "string": "Ignore Abnormal Invoice Amount",
+        "type": "boolean"
+    },
+    "invoice_warn": {
+        "help": "Selecting the Warning option will notify user with the message, Selecting Blocking Message will throw an exception with the message and block the flow. The Message has to be written in the next field.",
+        "string": "Invoice",
+        "type": "selection"
+    },
+    "invoice_warn_msg": {
+        "string": "Message for Invoice",
+        "type": "text"
+    },
+    "invoice_sending_method": {
+        "string": "Invoice sending",
+        "type": "selection"
+    },
+    "invoice_edi_format": {
+        "string": "eInvoice format",
+        "type": "selection"
+    },
+    "invoice_edi_format_store": {
+        "string": "Invoice Edi Format Store",
+        "type": "char"
+    },
+    "display_invoice_edi_format": {
+        "string": "Display Invoice Edi Format",
+        "type": "boolean"
+    },
+    "invoice_template_pdf_report_id": {
+        "relation": "ir.actions.report",
+        "string": "Invoice template",
+        "type": "many2one"
+    },
+    "display_invoice_template_pdf_report_id": {
+        "string": "Display Invoice Template Pdf Report",
+        "type": "boolean"
+    },
+    "supplier_rank": {
+        "string": "Supplier Rank",
+        "type": "integer"
+    },
+    "customer_rank": {
+        "string": "Customer Rank",
+        "type": "integer"
+    },
+    "autopost_bills": {
+        "help": "Automatically post bills for this trusted partner",
+        "string": "Auto-post bills",
+        "type": "selection"
+    },
+    "duplicated_bank_account_partners_count": {
+        "string": "Duplicated Bank Account Partners Count",
+        "type": "integer"
+    },
+    "is_coa_installed": {
+        "string": "Is Coa Installed",
+        "type": "boolean"
+    },
+    "property_outbound_payment_method_line_id": {
+        "help": "Preferred payment method when buying from this vendor. This will be set by default on all outgoing payments created for this vendor",
+        "relation": "account.payment.method.line",
+        "string": "Property Outbound Payment Method Line",
+        "type": "many2one"
+    },
+    "property_inbound_payment_method_line_id": {
+        "help": "Preferred payment method when selling to this customer. This will be set by default on all incoming payments created for this customer",
+        "relation": "account.payment.method.line",
+        "string": "Property Inbound Payment Method Line",
+        "type": "many2one"
+    },
+    "opportunity_ids": {
+        "relation": "crm.lead",
+        "string": "Opportunities",
+        "type": "one2many"
+    },
+    "opportunity_count": {
+        "string": "Opportunity Count",
+        "type": "integer"
+    },
+    "visitor_ids": {
+        "relation": "website.visitor",
+        "string": "Visitors",
+        "type": "one2many"
+    },
+    "is_ubl_format": {
+        "string": "Is Ubl Format",
+        "type": "boolean"
+    },
+    "is_peppol_edi_format": {
+        "string": "Is Peppol Edi Format",
+        "type": "boolean"
+    },
+    "peppol_endpoint": {
+        "help": "Unique identifier used by the BIS Billing 3.0 and its derivatives, also known as Endpoint ID.",
+        "string": "Peppol Endpoint",
+        "type": "char"
+    },
+    "peppol_eas": {
+        "help": "Code used to identify the Endpoint for BIS Billing 3.0 and its derivatives.\n             List available at https: //docs.peppol.eu/poacc/billing/3.0/codelist/eas/",
+        "string": "Peppol e-address (EAS)",
+        "type": "selection"
+    },
+    "available_peppol_eas": {
+        "string": "Available Peppol Eas",
+        "type": "json"
+    },
+    "vies_valid": {
+        "help": "European VAT numbers are automatically checked on the VIES database.",
+        "string": "Intra-Community Valid",
+        "type": "boolean"
+    },
+    "perform_vies_validation": {
+        "string": "Perform Vies Validation",
+        "type": "boolean"
+    },
+    "vies_vat_to_check": {
+        "string": "Vies Vat To Check",
+        "type": "char"
+    },
+    "loyalty_card_count": {
+        "string": "Active loyalty cards",
+        "type": "integer"
+    },
+    "website_description": {
+        "string": "Website Partner Full Description",
+        "type": "html"
+    },
+    "website_short_description": {
+        "string": "Website Partner Short Description",
+        "type": "text"
+    },
+    "l10n_latam_identification_type_id": {
+        "help": "The type of identification",
+        "relation": "l10n_latam.identification.type",
+        "string": "Identification Type",
+        "type": "many2one"
+    },
+    "sale_order_count": {
+        "string": "Sale Order Count",
+        "type": "integer"
+    },
+    "sale_order_ids": {
+        "relation": "sale.order",
+        "string": "Sales Order",
+        "type": "one2many"
+    },
+    "sale_warn": {
+        "help": "Selecting the Warning option will notify user with the message, Selecting Blocking Message will throw an exception with the message and block the flow. The Message has to be written in the next field.",
+        "string": "Sales Warnings",
+        "type": "selection"
+    },
+    "sale_warn_msg": {
+        "string": "Message for Sales Order",
+        "type": "text"
+    },
+    "property_delivery_carrier_id": {
+        "help": "Default delivery method used in sales orders.",
+        "relation": "delivery.carrier",
+        "string": "Delivery Method",
+        "type": "many2one"
+    },
+    "l10n_ar_vat": {
+        "help": "Computed field that returns VAT or nothing if this one is not set for the partner",
+        "string": "VAT",
+        "type": "char"
+    },
+    "l10n_ar_formatted_vat": {
+        "help": "Computed field that will convert the given VAT number to the format {person_category:2}-{number:10}-{validation_number:1}",
+        "string": "Formatted VAT",
+        "type": "char"
+    },
+    "l10n_ar_gross_income_number": {
+        "string": "Gross Income Number",
+        "type": "char"
+    },
+    "l10n_ar_gross_income_type": {
+        "help": "Argentina: Type of gross income: exempt, local, multilateral.",
+        "string": "Gross Income Type",
+        "type": "selection"
+    },
+    "l10n_ar_afip_responsibility_type_id": {
+        "help": "Defined by AFIP to identify the type of responsibilities that a person or a legal entity could have and that impacts in the type of operations and requirements they need.",
+        "relation": "l10n_ar.afip.responsibility.type",
+        "string": "AFIP Responsibility Type",
+        "type": "many2one"
+    },
+    "slide_channel_ids": {
+        "relation": "slide.channel",
+        "string": "eLearning Courses",
+        "type": "many2many"
+    },
+    "slide_channel_completed_ids": {
+        "relation": "slide.channel",
+        "string": "Completed Courses",
+        "type": "one2many"
+    },
+    "slide_channel_count": {
+        "string": "Course Count",
+        "type": "integer"
+    },
+    "slide_channel_company_count": {
+        "string": "Company Course Count",
+        "type": "integer"
+    },
+    "last_website_so_id": {
+        "relation": "sale.order",
+        "string": "Last Online Sales Order",
+        "type": "many2one"
+    },
+    "sel_groups_2_4": {
+        "type": "selection",
+        "string": "Administration",
+        "selection": [
+            [
+                false,
+                ""
+            ],
+            [
+                2,
+                "Access Rights"
+            ],
+            [
+                4,
+                "Settings"
+            ]
+        ],
+        "help": "",
+        "exportable": false,
+        "selectable": false
+    },
+    "sel_groups_12": {
+        "type": "selection",
+        "string": "Canned Responses",
+        "selection": [
+            [
+                false,
+                ""
+            ],
+            [
+                12,
+                "Canned Response Administrator"
+            ]
+        ],
+        "help": "",
+        "exportable": false,
+        "selectable": false
+    },
+    "sel_groups_27_28_29": {
+        "type": "selection",
+        "string": "Sales",
+        "selection": [
+            [
+                false,
+                ""
+            ],
+            [
+                27,
+                "User: Own Documents Only"
+            ],
+            [
+                28,
+                "User: All Documents"
+            ],
+            [
+                29,
+                "Administrator"
+            ]
+        ],
+        "help": "Helps you handle your quotations, sale orders and invoicing.\n\nUser: Own Documents Only: the user will have access to his own data in the sales application.\nUser: All Documents: the user will have access to all records of everyone in the sales application.\nAdministrator: the user will have an access to the sales configuration as well as statistic reports.",
+        "exportable": false,
+        "selectable": false
+    },
+    "sel_groups_32_35": {
+        "type": "selection",
+        "string": "Invoicing",
+        "selection": [
+            [
+                false,
+                ""
+            ],
+            [
+                32,
+                "Invoicing"
+            ],
+            [
+                35,
+                "Administrator"
+            ]
+        ],
+        "help": "Helps you handle your invoices and accounting actions.\n\n        Invoicing: Invoices, payments and basic invoice reporting.\n        Administrator: full access including configuration rights.\n        \n",
+        "exportable": false,
+        "selectable": false
+    },
+    "sel_groups_1_10_11": {
+        "type": "selection",
+        "string": "User types",
+        "selection": [
+            [
+                1,
+                "Internal User"
+            ],
+            [
+                10,
+                "Portal"
+            ],
+            [
+                11,
+                "Public"
+            ]
+        ],
+        "help": "Helps you manage users.\n\nPortal: Portal members have specific access rights (such as record rules and restricted menus).\n                They usually do not belong to the usual Odoo groups.\nPublic: Public users have specific access rights (such as record rules and restricted menus).\n                They usually do not belong to the usual Odoo groups.",
+        "exportable": false,
+        "selectable": false
+    },
+    "sel_groups_49_50": {
+        "type": "selection",
+        "string": "Surveys",
+        "selection": [
+            [
+                false,
+                ""
+            ],
+            [
+                49,
+                "User"
+            ],
+            [
+                50,
+                "Administrator"
+            ]
+        ],
+        "help": "Helps you manage your survey for review of different users.\n",
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_20": {
+        "type": "boolean",
+        "string": "Manager",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_19": {
+        "type": "boolean",
+        "string": "Officer",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_58": {
+        "type": "boolean",
+        "string": "Permiso de Profesor (Sergio)",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "sel_groups_15_16": {
+        "type": "selection",
+        "string": "Website",
+        "selection": [
+            [
+                false,
+                ""
+            ],
+            [
+                15,
+                "Restricted Editor"
+            ],
+            [
+                16,
+                "Editor and Designer"
+            ]
+        ],
+        "help": "",
+        "exportable": false,
+        "selectable": false
+    },
+    "sel_groups_42": {
+        "type": "selection",
+        "string": "Dashboard",
+        "selection": [
+            [
+                false,
+                ""
+            ],
+            [
+                42,
+                "Admin"
+            ]
+        ],
+        "help": "User access level for Dashboard module\n",
+        "exportable": false,
+        "selectable": false
+    },
+    "sel_groups_41": {
+        "type": "selection",
+        "string": "Bank",
+        "selection": [
+            [
+                false,
+                ""
+            ],
+            [
+                41,
+                "Validate bank account"
+            ]
+        ],
+        "help": "",
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_37": {
+        "type": "boolean",
+        "string": "A warning can be set on a partner (Account)",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_45": {
+        "type": "boolean",
+        "string": "A warning can be set on a product or a customer (Sale)",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_8": {
+        "type": "boolean",
+        "string": "Access to export feature",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_38": {
+        "type": "boolean",
+        "string": "Allow the cash rounding management",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_22": {
+        "type": "boolean",
+        "string": "Analytic Accounting",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_23": {
+        "type": "boolean",
+        "string": "Basic Pricelists",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_48": {
+        "type": "boolean",
+        "string": "Comparison Price",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_30": {
+        "type": "boolean",
+        "string": "Delivery Address",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_44": {
+        "type": "boolean",
+        "string": "Discount on lines",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_43": {
+        "type": "boolean",
+        "string": "Lock Confirmed Sales",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_13": {
+        "type": "boolean",
+        "string": "Mail Template Editor",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_21": {
+        "type": "boolean",
+        "string": "Manage Multiple Units of Measure",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_24": {
+        "type": "boolean",
+        "string": "Manage Product Packaging",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_25": {
+        "type": "boolean",
+        "string": "Manage Product Variants",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_18": {
+        "type": "boolean",
+        "string": "Multi-website",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_46": {
+        "type": "boolean",
+        "string": "Pro-forma Invoices",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_17": {
+        "type": "boolean",
+        "string": "Public access to arbitrary exposed model",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_40": {
+        "type": "boolean",
+        "string": "Purchase Receipt",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_14": {
+        "type": "boolean",
+        "string": "Receive notifications in Odoo",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_39": {
+        "type": "boolean",
+        "string": "Sale Receipt",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_51": {
+        "type": "boolean",
+        "string": "Show Lead Menu",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_52": {
+        "type": "boolean",
+        "string": "Show Recurring Revenues Menu",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_47": {
+        "type": "boolean",
+        "string": "UOM Price Display for eCommerce",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_9": {
+        "type": "boolean",
+        "string": "Contact Creation",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_5": {
+        "type": "boolean",
+        "string": "Multi Companies",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_6": {
+        "type": "boolean",
+        "string": "Multi Currencies",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_26": {
+        "type": "boolean",
+        "string": "Product Creation",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_36": {
+        "type": "boolean",
+        "string": "Show Inalterability Features",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_7": {
+        "type": "boolean",
+        "string": "Technical Features",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    },
+    "in_group_3": {
+        "type": "boolean",
+        "string": "Bypass HTML Field Sanitize",
+        "help": false,
+        "exportable": false,
+        "selectable": false
+    }
+}

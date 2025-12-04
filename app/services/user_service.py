@@ -2,8 +2,9 @@ from typing import List, Optional, Sequence
 from uuid import UUID
 
 from app.database.models import User
+from app.email import EmailClient
+from app.enums import TemplateHTML
 from app.error import UserAlreadyExist, UserNotFound
-from app.external_services import EmailClient
 from app.repositories import InterfaceContractRepository, InterfaceUserRepository
 from app.schemas import Contract as ContractDTO
 from app.schemas import UserCreate, UserDB
@@ -37,7 +38,14 @@ class UserService:
 
         client: EmailClient = EmailClient()
 
-        client.send_verification(email=user_create.email)
+        # TODO: Crear un modelo para enviar por HTML
+
+        await client.send_email(
+            subject="Bienvenido a Studeeo!!",
+            email=user_create.email,
+            email_information=user_create,
+            template_name=TemplateHTML.VERIFICATION,
+        )
 
     async def get_users(self, is_active: bool) -> List[UserDB]:
         users: Sequence[User] = await self.repository.get_users(is_active=is_active)
@@ -56,6 +64,8 @@ class UserService:
 
         try:
             await self.repository.update_user(user=user)
+
+            # Llamar al cliente de odoo para obtener su informacion y poblar la base de datos
 
         except Exception:
             raise

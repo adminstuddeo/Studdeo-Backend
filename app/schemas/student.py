@@ -1,9 +1,7 @@
 from pydantic import BaseModel, EmailStr
 
 
-class Teacher(BaseModel):
-    id: int
+class Student(BaseModel):
     name: str
-    login: EmailStr
+    lastname: str
     email: EmailStr
-    active: bool

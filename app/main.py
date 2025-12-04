@@ -1,5 +1,6 @@
 from typing import List
 
+import logfire
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
@@ -8,16 +9,16 @@ from app.configuration import configuration
 from app.enums import Environment
 from app.routes import auth_router, course_router, teacher_router, user_router
 
+routers: List[APIRouter] = [auth_router, course_router, teacher_router, user_router]
+
 app = FastAPI(
     title="Studdeo Odoo API",
     docs_url="/docs" if configuration.environment == Environment.DEVELOPMENT else None,
 )
 
-routers: List[APIRouter] = [auth_router, course_router, teacher_router, user_router]
-
 app.add_middleware(
     middleware_class=CORSMiddleware,
-    allow_origins=configuration.allow_origins,
+    allow_origins=[configuration.FRONTEND_URL.encoded_string()],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -32,10 +33,13 @@ def ping() -> dict[str, bool]:
 
 
 for route in routers:
-    app.include_router(route)
+    app.include_router(router=route)
 
-# 2. Enviar el mail al crear el usuario
-# 3. Ver el tema de las ventas
-# 4. Metricas
-# 5. Agregar a la respuesta del courso sus estudiantes
-# 6. Ver como poblar la BD
+logfire.configure()
+logfire.instrument_fastapi(app=app)
+
+# TODO:
+# 1. Revisar que unicamente los profesores puedan ver sus clases
+# 2. Ver el tema de las ventas
+# 3. Metricas
+# 5. Ver como poblar la BD
