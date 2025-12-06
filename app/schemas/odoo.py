@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List, Optional
 
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr
 
 
 class TeacherOdoo(BaseModel):
@@ -23,20 +23,20 @@ class LessonOdoo(BaseModel):
     name: str
 
 
-class Buyer(BaseModel):
-    order_id: int
-    order_name: str
-    state: str
-    date_order: datetime
-    partner_id: int
-    partner_name: str
-    email: EmailStr
+class DetailSaleOdoo(BaseModel):
+    price: float
+    quiantity: int
+    external_reference: int
 
 
-class Sale(BaseModel):
-    has_product: bool
-    product_id: int
-    orders: int
-    units: int
-    revenue: int
-    buyers: List[Buyer] = Field(default_factory=list[Buyer])
+class SaleOdoo(BaseModel):
+    external_reference: int
+    date: datetime
+    detail_sale: List[DetailSaleOdoo]
+
+
+class StudentOdoo(BaseModel):
+    external_reference: int
+    name: str
+    emai: EmailStr
+    phone: str

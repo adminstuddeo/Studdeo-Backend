@@ -39,7 +39,6 @@ logfire.configure()
 logfire.instrument_fastapi(app=app)
 
 # TODO:
-# 1. Revisar que unicamente los profesores puedan ver sus clases
 # 2. Ver el tema de las ventas
 # 3. Metricas
 # 5. Ver como poblar la BD

@@ -33,3 +33,5 @@ class CourseRepository(InterfaceCourseRepository):
         )
 
         return result.scalars().fetchall()
+
+    async def buil(self): ...

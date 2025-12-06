@@ -18,7 +18,7 @@ class Course(Base):
     registered: Mapped[int] = mapped_column()
     external_reference: Mapped[int] = mapped_column()
     id_user: Mapped[UUID] = mapped_column(ForeignKey("user.id"))
-    # price: float
+    price: Mapped[float] = mapped_column(nullable=True)
 
     lessons: Mapped[List[Lesson]] = relationship()
     students: Mapped[List[Student]] = relationship(secondary="student_x_course")

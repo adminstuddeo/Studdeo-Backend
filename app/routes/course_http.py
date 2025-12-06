@@ -32,6 +32,10 @@ async def route_get_lessons(
         dependency=get_current_user, scopes=[Permission.READ_LESSONS]
     ),
 ) -> List[Lesson]:
+    for course in current_user.courses:
+        if course.id == id_course:
+            return [Lesson.model_validate(lesson) for lesson in course.lessons]
+
     return await course_service.get_lessons(id_course=id_course)
 
 
@@ -43,4 +47,7 @@ async def route_get_students(
         dependency=get_current_user, scopes=[Permission.READ_STUDENTS]
     ),
 ) -> List[Student]:
+    if not await course_service.get_courses(id_user=current_user.id):
+        raise
+
     return await course_service.get_students(id_course=id_course)
