@@ -20,7 +20,9 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "alembic>=1.17.2",
     "fastapi[standard]>=0.121.2",
     "pre-commit>=4.5.0",
+    "psycopg[binary]>=3.3.2",
     "pytest>=9.0.1",
 ]

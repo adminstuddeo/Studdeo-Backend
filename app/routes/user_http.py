@@ -47,10 +47,6 @@ async def route_create_user(
         )
 
 
-@user_router.get(path="/{id_user}/sales")
-async def route_get_sales(): ...
-
-
 @user_router.post(path="/{id_user}")
 async def route_update_user(
     id_user: UUID,

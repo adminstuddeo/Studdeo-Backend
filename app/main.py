@@ -11,7 +11,7 @@ from app.routes import auth_router, course_router, teacher_router, user_router
 
 routers: List[APIRouter] = [auth_router, course_router, teacher_router, user_router]
 
-app = FastAPI(
+app: FastAPI = FastAPI(
     title="Studdeo Odoo API",
     docs_url="/docs" if configuration.environment == Environment.DEVELOPMENT else None,
 )
@@ -28,8 +28,8 @@ if configuration.environment == Environment.PRODUCTION:
 
 
 @app.get("/ping", tags=["Root"])
-def ping() -> dict[str, bool]:
-    return {"ok": True}
+def ping() -> dict[str, str]:
+    return {"message": "pong"}
 
 
 for route in routers:
@@ -37,8 +37,3 @@ for route in routers:
 
 logfire.configure()
 logfire.instrument_fastapi(app=app)
-
-# TODO:
-# 2. Ver el tema de las ventas
-# 3. Metricas
-# 5. Ver como poblar la BD

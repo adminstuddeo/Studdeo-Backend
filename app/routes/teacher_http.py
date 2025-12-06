@@ -1,20 +1,29 @@
-from fastapi import APIRouter, Depends
+from typing import List, Set
 
+from fastapi import APIRouter, Depends, Security
+
+from app.database.models import User
+from app.enums import Permission
+from app.schemas.odoo import TeacherOdoo
 from app.services import UserService
 
-from .dependencies import get_user_service
+from .dependencies import get_current_user, get_user_service
 
 teacher_router: APIRouter = APIRouter(prefix="/profesores", tags=["Profesor Odoo"])
 
 
 @teacher_router.get(path="/")
-def route_get_teachers(
+async def route_get_teachers(
+    already_mapped: bool = False,
     user_service: UserService = Depends(get_user_service),
-    # current_user: User = Security(
-    #   get_current_user, scopes=[Permission.READ_EXTERNAL_USERS]
-    # ),
-): ...
+    current_user: User = Security(
+        dependency=get_current_user, scopes=[Permission.READ_EXTERNAL_USERS]
+    ),
+) -> List[TeacherOdoo]:
+    users_ids: Set[int] = set()
+    if already_mapped:
+        users_ids = {
+            user.external_reference for user in await user_service.get_users(True)
+        }
 
-
-# 1 Un endpoint que me traiga los usuarios con nombre, apellido, mail, id (external_reference), filtrando los que ya estan en
-# nuestra base de datos
+    return user_service.get_external_users(teacher_ids=users_ids)

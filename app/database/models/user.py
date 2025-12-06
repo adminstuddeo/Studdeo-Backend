@@ -7,7 +7,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
 from .contract import Contract
-from .course import Course
 from .role import Role
 
 
@@ -32,7 +31,6 @@ class User(Base):
         secondaryjoin="UserContract.contract_id == Contract.id",
         viewonly=True,
     )
-    courses: Mapped[List[Course]] = relationship()
 
     def activate(self) -> None:
         self.is_active = True

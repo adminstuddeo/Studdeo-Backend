@@ -1,32 +1,20 @@
-from typing import List, Optional, Sequence
-from uuid import UUID
+from typing import List, Set
 
-from app.database.models import Course
-from app.repositories import InterfaceCourseRepository
-from app.schemas import CourseDB, Lesson, Student
+from app.repositories import OdooRepository
+from app.schemas import CourseOdoo, LessonOdoo, StudentOdoo
 
 
 class CourseService:
-    def __init__(self, repository: InterfaceCourseRepository) -> None:
-        self.repository: InterfaceCourseRepository = repository
+    def __init__(self, repository: OdooRepository) -> None:
+        self.repository: OdooRepository = repository
 
-    async def get_courses(self, id_user: UUID) -> List[CourseDB]:
-        courses: Sequence[Course] = await self.repository.get_courses(id_user=id_user)
+    def get_courses(self, teacher_id: int) -> List[CourseOdoo]:
+        return self.repository.get_courses(teacher_id=teacher_id)
 
-        return [CourseDB.model_validate(course) for course in courses]
+    def get_lessons(self, course_id: int) -> List[LessonOdoo]:
+        return self.repository.get_course_lessons(course_id=course_id)
 
-    async def get_lessons(self, id_course: UUID) -> List[Lesson]:
-        course: Optional[Course] = await self.repository.get_course(id_course=id_course)
+    def get_students(self, course_id: int) -> List[StudentOdoo]:
+        students_ids: Set[int] = self.repository.get_students_ids(course_id=course_id)
 
-        if not course:
-            raise
-
-        return [Lesson.model_validate(lesson) for lesson in course.lessons]
-
-    async def get_students(self, id_course: UUID) -> List[Student]:
-        course: Optional[Course] = await self.repository.get_course(id_course=id_course)
-
-        if not course:
-            raise
-
-        return [Student.model_validate(student) for student in course.students]
+        return self.repository.get_students(students_ids=students_ids)

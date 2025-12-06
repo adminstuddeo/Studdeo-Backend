@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import database
 from app.database.models.user import User
 from app.error import UserNotFound
-from app.repositories import ContractRepository, CourseRepository, UserRepository
+from app.repositories import ContractRepository, OdooRepository, UserRepository
 from app.services import AuthService, CourseService, UserService
 
 oauth_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
@@ -28,10 +28,8 @@ def get_user_service(
     )
 
 
-def get_course_service(
-    db_session: AsyncSession = Depends(dependency=database.get_async_session),
-) -> CourseService:
-    return CourseService(repository=CourseRepository(db_session=db_session))
+def get_course_service() -> CourseService:
+    return CourseService(repository=OdooRepository())
 
 
 async def get_current_user(

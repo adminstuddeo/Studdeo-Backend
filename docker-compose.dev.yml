@@ -17,14 +17,20 @@ services:
     image: postgres:16
     container_name: database
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: app
+      POSTGRES_DB: studdeo_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - app
 
 networks:
   app:
     driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local

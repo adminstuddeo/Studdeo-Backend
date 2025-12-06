@@ -20,6 +20,7 @@ class UserCreate(User):
 
 class UserDB(User):
     id: UUID
+    external_reference: int
 
 
 class UserContract(BaseModel):

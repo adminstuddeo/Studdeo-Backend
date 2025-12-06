@@ -15,7 +15,7 @@ from app.schemas import (
 )
 
 
-class OdooClient:
+class OdooRepository:
     def __init__(self) -> None:
         self.url: str = configuration.ODOO_URL.encoded_string()
         self.db: str = configuration.ODOO_DB
@@ -272,6 +272,3 @@ class OdooClient:
         students_ids: Set[int] = self.get_students_ids(id_course, options)
 
         return self.get_students(students_ids=students_ids)
-
-
-odoo: OdooClient = OdooClient()
