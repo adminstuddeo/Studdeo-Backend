@@ -146,7 +146,9 @@ class OdooRepository:
         for detail in details_sale:
             order_id: int = detail["order_id"][0]
             detail_sale_odoo: DetailSaleOdoo = DetailSaleOdoo(
-                external_reference=order_id, **detail
+                external_reference=order_id,
+                price=detail["price_total"],
+                quantity=detail["product_uom_qty"],
             )
             if not order_mapped.get(order_id):
                 order_mapped[order_id] = [detail_sale_odoo]
@@ -210,7 +212,12 @@ class OdooRepository:
         )
 
         return [
-            StudentOdoo(external_reference=student["id"], **student)
+            StudentOdoo(
+                external_reference=student["id"],
+                phone=student["phone"] if student["phone"] else None,
+                emai=student["email"] if "@" in student["email"] else None,
+                name=student["name"],
+            )
             for student in students
         ]
 

@@ -25,7 +25,7 @@ class LessonOdoo(BaseModel):
 
 class DetailSaleOdoo(BaseModel):
     price: float
-    quiantity: int
+    quantity: int
     external_reference: int
 
 
@@ -38,5 +38,5 @@ class SaleOdoo(BaseModel):
 class StudentOdoo(BaseModel):
     external_reference: int
     name: str
-    emai: EmailStr
-    phone: str
+    emai: Optional[EmailStr] = None
+    phone: Optional[str] = None

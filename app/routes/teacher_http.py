@@ -9,7 +9,7 @@ from app.services import UserService
 
 from .dependencies import get_current_user, get_user_service
 
-teacher_router: APIRouter = APIRouter(prefix="/profesores", tags=["Profesor Odoo"])
+teacher_router: APIRouter = APIRouter(prefix="/profesores", tags=["Odoo Teachers"])
 
 
 @teacher_router.get(path="/")
