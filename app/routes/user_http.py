@@ -38,7 +38,8 @@ async def route_create_user(
         await user_service.create_user(user_create=user_create)
 
         return JSONResponse(
-            status_code=status.HTTP_201_CREATED, content="User successfully created"
+            status_code=status.HTTP_201_CREATED,
+            content={"message": "User successfully created"},
         )
 
     except UserAlreadyExist as user_error:
@@ -67,18 +68,25 @@ async def route_update_user(
             contract=user_information.contract,
         )
 
-        for reference in user_information.referencies:
-            await user_service.create_contract(
-                referer_id_user=id_user,
-                referred_id_user=reference.referred_id_user,
-                contract=Contract.model_validate(reference),
-            )
+        if user_information.referencies:
+            for reference in user_information.referencies:
+                await user_service.create_contract(
+                    referer_id_user=id_user,
+                    referred_id_user=reference.referred_id_user,
+                    contract=Contract.model_validate(reference),
+                )
 
         return JSONResponse(
-            status_code=status.HTTP_200_OK, content={"User updated succesfully"}
+            status_code=status.HTTP_200_OK,
+            content={"message": "User updated succesfully"},
         )
 
     except UserNotFound as user_error:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=str(user_error)
+        )
+
+    except Exception as error:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(error)
         )

@@ -23,7 +23,9 @@ async def route_get_teachers(
     users_ids: Set[int] = set()
     if already_mapped:
         users_ids = {
-            user.external_reference for user in await user_service.get_users(True)
+            user.external_reference
+            for user in await user_service.get_users(is_active=True)
+            if user.external_reference
         }
 
     return user_service.get_external_users(teacher_ids=users_ids)

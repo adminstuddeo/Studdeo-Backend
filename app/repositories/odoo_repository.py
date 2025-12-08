@@ -1,4 +1,3 @@
-from datetime import datetime
 from typing import Any, Dict, List, Optional, Set, Tuple, Union, cast
 from xmlrpc.client import ServerProxy
 
@@ -61,9 +60,7 @@ class OdooRepository:
 
         return result
 
-    def get_courses(
-        self, teacher_id: int, options: Optional[Tuple[str, str, Any]] = None
-    ) -> List[CourseOdoo]:
+    def get_courses(self, teacher_id: int) -> List[CourseOdoo]:
         course_fields: List[str] = [
             "id",
             "name",
@@ -73,9 +70,6 @@ class OdooRepository:
         arguments: List[Union[Tuple[str, str, Any], str, int]] = [
             ("user_id", "=", teacher_id)
         ]
-
-        if options:
-            arguments.append(options)
 
         courses: List[Dict[str, Any]] = self.execute_kw(
             model="slide.channel",
@@ -98,17 +92,12 @@ class OdooRepository:
             for course in courses
         ]
 
-    def get_course_lessons(
-        self, course_id: int, options: Optional[Tuple[str, str, Any]] = None
-    ) -> List[LessonOdoo]:
+    def get_course_lessons(self, course_id: int) -> List[LessonOdoo]:
         lesson_fields: List[str] = ["id", "name"]
 
         arguments: List[Union[Tuple[str, str, Any], str, int]] = [
             ("channel_id", "=", course_id)
         ]
-
-        if options:
-            arguments.append(options)
 
         lessons: List[Dict[str, Any]] = self.execute_kw(
             model="slide.slide",
@@ -121,17 +110,12 @@ class OdooRepository:
             LessonOdoo(external_reference=lesson["id"], **lesson) for lesson in lessons
         ]
 
-    def get_course_sales(
-        self, product_id: int, options: Optional[Tuple[str, str, Any]] = None
-    ) -> List[SaleOdoo]:
+    def get_course_sales(self, product_id: int) -> List[SaleOdoo]:
         details_sale_fields: List[str] = ["order_id", "price_total", "product_uom_qty"]
         arguments: List[Union[Tuple[str, str, Any], str, int]] = [
             ("product_id", "=", product_id),
             ("order_id.state", "in", ["sale", "done"]),
         ]
-
-        if options:
-            arguments.append(options)
 
         details_sale: List[Dict[str, Any]] = self.execute_kw(
             model="sale.order.line",
@@ -163,6 +147,14 @@ class OdooRepository:
             kwargs={"fields": sale_fields},
         )
 
+        student_set: Set[int] = {sale["partner_id"][0] for sale in sales_information}
+
+        students: List[StudentOdoo] = self.get_students(students_ids=student_set)
+
+        student_map: Dict[int, StudentOdoo] = {}
+        for student in students:
+            student_map[student.external_reference] = student
+
         sales: List[SaleOdoo] = []
         for sale in sales_information:
             sales.append(
@@ -170,22 +162,18 @@ class OdooRepository:
                     external_reference=sale["id"],
                     date=sale["date_order"],
                     detail_sale=order_mapped[sale["id"]],
+                    buyer=student_map[sale["partner_id"][0]],
                 )
             )
 
         return sales
 
-    def get_students_ids(
-        self, course_id: int, options: Optional[Tuple[str, str, Any]] = None
-    ) -> Set[int]:
+    def get_students_ids(self, course_id: int) -> Set[int]:
         student_fields: List[str] = ["partner_id"]
 
         arguments: List[Union[Tuple[str, str, Any], str, int]] = [
             ("channel_id", "=", course_id)
         ]
-
-        if options:
-            arguments.append(options)
 
         students: List[Dict[str, Any]] = self.execute_kw(
             model="slide.channel.partner",
@@ -244,38 +232,3 @@ class OdooRepository:
             TeacherOdoo(external_reference=teacher["id"], **teacher)
             for teacher in teachers
         ]
-
-    def sync_courses(
-        self, teacher_id: int, latest_sync_date: datetime
-    ) -> List[CourseOdoo]:
-        string_date: str = latest_sync_date.strftime("%Y-%m-%d %H:%M:%S")
-        options: Tuple[str, str, str] = ("write_date", ">=", string_date)
-
-        return self.get_courses(teacher_id=teacher_id, options=options)
-
-    def sync_lessons(
-        self, id_course: int, latest_sync_date: datetime
-    ) -> List[LessonOdoo]:
-        string_date: str = latest_sync_date.strftime("%Y-%m-%d %H:%M:%S")
-
-        options: Tuple[str, str, str] = ("write_date", ">=", string_date)
-
-        return self.get_course_lessons(course_id=id_course, options=options)
-
-    def sync_sales(self, product_id: int, latest_sync_date: datetime) -> List[SaleOdoo]:
-        string_date: str = latest_sync_date.strftime("%Y-%m-%d %H:%M:%S")
-        options: Tuple[str, str, str] = (
-            "order_id.date_order",
-            ">=",
-            string_date,
-        )
-        return self.get_course_sales(product_id=product_id, options=options)
-
-    def sync_students(
-        self, id_course: int, latest_sync_date: datetime
-    ) -> List[StudentOdoo]:
-        string_date: str = latest_sync_date.strftime("%Y-%m-%d %H:%M:%S")
-        options: Tuple[str, str, str] = ("write_date", ">=", string_date)
-        students_ids: Set[int] = self.get_students_ids(id_course, options)
-
-        return self.get_students(students_ids=students_ids)

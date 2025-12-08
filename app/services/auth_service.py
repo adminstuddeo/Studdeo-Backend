@@ -56,7 +56,7 @@ class AuthService:
 
         user: Optional[User] = await self.repository.get_user_by_email(email=email)
 
-        if not user:
+        if not user or not user.is_active:
             raise UserNotFound()
 
         return user

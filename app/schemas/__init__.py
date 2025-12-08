@@ -1,4 +1,4 @@
-from .contract import Contract
+from .contract import Contract, ContractCreate
 from .odoo import (
     CourseOdoo,
     DetailSaleOdoo,
@@ -12,6 +12,7 @@ from .user import User, UserContract, UserCreate, UserDB
 
 __all__: list[str] = [
     "Contract",
+    "ContractCreate",
     "CourseOdoo",
     "DetailSaleOdoo",
     "LessonOdoo",

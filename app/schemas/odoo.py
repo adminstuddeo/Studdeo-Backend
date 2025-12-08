@@ -4,18 +4,18 @@ from typing import List, Optional
 from pydantic import BaseModel, EmailStr
 
 
+class StudentOdoo(BaseModel):
+    external_reference: int
+    name: str
+    emai: Optional[EmailStr] = None
+    phone: Optional[str] = None
+
+
 class TeacherOdoo(BaseModel):
     external_reference: int
     name: str
     email: EmailStr
     active: bool
-
-
-class CourseOdoo(BaseModel):
-    external_reference: int
-    name: str
-    description: str
-    product_id: Optional[int] = None
 
 
 class LessonOdoo(BaseModel):
@@ -33,10 +33,12 @@ class SaleOdoo(BaseModel):
     external_reference: int
     date: datetime
     detail_sale: List[DetailSaleOdoo]
+    buyer: StudentOdoo
 
 
-class StudentOdoo(BaseModel):
+class CourseOdoo(BaseModel):
     external_reference: int
     name: str
-    emai: Optional[EmailStr] = None
-    phone: Optional[str] = None
+    description: str
+    product_id: Optional[int] = None
+    sales: Optional[List[SaleOdoo]] = None

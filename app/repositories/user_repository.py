@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.database.models import Role, User
+from app.enums import Role as RoleEnum
 from app.schemas import UserCreate
 
 
@@ -32,14 +33,25 @@ class UserRepository(InterfaceUserRepository):
         self.async_session: AsyncSession = db_session
 
     async def create_user(self, user_create: UserCreate) -> None:
-        user: User = User(**user_create.model_dump())
+        statement: Select[Tuple[Role]] = select(Role).where(
+            Role.name == RoleEnum.TEACHER
+        )
+
+        result: Result[Tuple[Role]] = await self.async_session.execute(
+            statement=statement
+        )
+
+        role: Role = result.scalar_one()
+
+        user: User = User(**user_create.model_dump(), id_role=role.id)
 
         try:
             self.async_session.add(user)
             await self.async_session.commit()
 
-        except Exception:
+        except Exception as database_error:
             await self.async_session.rollback()
+            raise database_error
 
     async def get_user(self, id_user: UUID) -> Optional[User]:
         try:
@@ -72,9 +84,8 @@ class UserRepository(InterfaceUserRepository):
 
     async def update_user(self, user: User) -> None:
         try:
-            self.async_session.add(user)
-
             await self.async_session.commit()
 
-        except Exception:
+        except Exception as database_error:
             await self.async_session.rollback()
+            raise database_error

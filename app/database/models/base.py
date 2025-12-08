@@ -11,4 +11,4 @@ class Base(DeclarativeBase):
     updated_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True), server_default=func.now(), onupdate=func.now()
     )
-    is_active: Mapped[bool] = mapped_column()
+    is_active: Mapped[bool] = mapped_column(server_default="False", default=False)

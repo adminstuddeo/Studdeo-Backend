@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, EmailStr
@@ -20,12 +20,12 @@ class UserCreate(User):
 
 class UserDB(User):
     id: UUID
-    external_reference: int
+    external_reference: Optional[int] = None
 
 
 class UserContract(BaseModel):
     external_reference: int
     contract: Contract
-    referencies: List[Reference]
+    referencies: Optional[List[Reference]] = None
 
     model_config = ConfigDict(frozen=True)

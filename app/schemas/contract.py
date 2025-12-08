@@ -13,3 +13,7 @@ class Contract(BaseModel):
 
 class Reference(Contract):
     referred_id_user: UUID
+
+
+class ContractCreate(Reference):
+    referer_id_user: UUID

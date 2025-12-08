@@ -2,8 +2,6 @@ from typing import List, Optional, Sequence, Set
 from uuid import UUID
 
 from app.database.models import User
-from app.email import EmailClient
-from app.enums import TemplateHTML
 from app.error import UserAlreadyExist, UserNotFound
 from app.repositories import (
     InterfaceContractRepository,
@@ -11,7 +9,7 @@ from app.repositories import (
     OdooRepository,
 )
 from app.schemas import Contract as ContractDTO
-from app.schemas import TeacherOdoo, UserCreate, UserDB
+from app.schemas import ContractCreate, TeacherOdoo, UserCreate, UserDB
 
 from .security_service import SecurityService
 
@@ -30,18 +28,14 @@ class UserService:
     async def activate_user(self, id_user: UUID, external_reference: int) -> None:
         user: Optional[User] = await self.repository.get_user(id_user=id_user)
 
-        if not user:
+        if not user or user.is_active:
             raise UserNotFound()
 
         user.activate()
 
         user.set_external_refence(external_reference=external_reference)
 
-        try:
-            await self.repository.update_user(user=user)
-
-        except Exception:
-            raise
+        await self.repository.update_user(user=user)
 
     async def create_contract(
         self, referer_id_user: UUID, referred_id_user: UUID, contract: ContractDTO
@@ -57,17 +51,13 @@ class UserService:
         if not user_referenced or not user_referer:
             raise UserNotFound()
 
-        try:
-            await self.contract_repository.create_contract(
-                referer_id_user=user_referer.id,
-                referred_id_user=user_referenced.id,
-                percentaje=contract.percentaje,
-                valid_from=contract.valid_from,
-                valid_to=contract.valid_to,
-            )
+        contract_create = ContractCreate(
+            **contract.model_dump(),
+            referer_id_user=referred_id_user,
+            referred_id_user=referred_id_user,
+        )
 
-        except Exception:
-            raise
+        await self.contract_repository.create_contract(contract_create=contract_create)
 
     async def create_user(self, user_create: UserCreate) -> None:
         if await self.repository.get_user_by_email(email=user_create.email):
@@ -78,21 +68,24 @@ class UserService:
         )
 
         user: UserCreate = UserCreate(
-            password=hashed_password, **user_create.model_dump()
+            password=hashed_password,
+            email=user_create.email,
+            name=user_create.name,
+            lastname=user_create.lastname,
         )
 
         await self.repository.create_user(user_create=user)
 
-        client: EmailClient = EmailClient()
+        # client: EmailClient = EmailClient()
 
         # TODO: Crear un modelo para enviar por HTML
 
-        await client.send_email(
-            subject="Bienvenido a Studeeo!!",
-            email=user_create.email,
-            email_information=user_create,
-            template_name=TemplateHTML.VERIFICATION,
-        )
+        # await client.send_email(
+        #    subject="Bienvenido a Studeeo!!",
+        #    email=user_create.email,
+        #    email_information=user_create,
+        #    template_name=TemplateHTML.VERIFICATION,
+        # )
 
     def get_external_users(
         self, teacher_ids: Optional[Set[int]] = None
@@ -105,4 +98,4 @@ class UserService:
     async def get_users(self, is_active: bool) -> List[UserDB]:
         users: Sequence[User] = await self.repository.get_users(is_active=is_active)
 
-        return [UserDB.model_validate(user) for user in users]
+        return [UserDB(**user.__dict__) for user in users]
