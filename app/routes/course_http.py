@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, Security, status
 
 from app.database.models import User
 from app.enums import Permission
-from app.error import CourseNotFound
+from app.error import CourseNotFound, UserNotFound
 from app.schemas import CourseOdoo, LessonOdoo, StudentOdoo
 from app.services import CourseService
 
@@ -22,6 +22,11 @@ async def route_get_courses(
     ),
     course_service: CourseService = Depends(dependency=get_course_service),
 ) -> List[CourseOdoo]:
+    if not current_user.external_reference:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=str(UserNotFound())
+        )
+
     return course_service.get_courses(teacher_id=current_user.external_reference)
 
 
@@ -34,6 +39,11 @@ async def route_get_lessons(
     ),
 ) -> List[LessonOdoo]:
     try:
+        if not current_user.external_reference:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail=str(UserNotFound())
+            )
+
         user_courses: Set[int] = {
             course.external_reference
             for course in course_service.get_courses(
@@ -61,6 +71,10 @@ async def route_get_students(
     ),
 ) -> List[StudentOdoo]:
     try:
+        if not current_user.external_reference:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail=str(UserNotFound())
+            )
         user_courses: Set[int] = {
             course.external_reference
             for course in course_service.get_courses(
