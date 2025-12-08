@@ -53,7 +53,7 @@ class UserService:
 
         contract_create = ContractCreate(
             **contract.model_dump(),
-            referer_id_user=referred_id_user,
+            referer_id_user=referer_id_user,
             referred_id_user=referred_id_user,
         )
 

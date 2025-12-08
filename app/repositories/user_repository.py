@@ -6,7 +6,7 @@ from sqlalchemy import Result, Select, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from app.database.models import Role, User
+from app.database.models import Contract, Role, User
 from app.enums import Role as RoleEnum
 from app.schemas import UserCreate
 
@@ -63,7 +63,10 @@ class UserRepository(InterfaceUserRepository):
     async def get_user_by_email(self, email: str) -> Optional[User]:
         statement: Select[Tuple[User]] = (
             select(User)
-            .options(selectinload(User.role).selectinload(Role.permissions))
+            .options(
+                selectinload(User.role).selectinload(Role.permissions),
+                selectinload(User.contracts).selectinload(Contract.refererred_user),
+            )
             .where(User.email == email)
         )
 

@@ -17,12 +17,28 @@ def route_get_sales_user(
     current_user: User = Security(get_current_user, scopes=[Permission.READ_SALES]),
     course_service: CourseService = Depends(get_course_service),
 ) -> List[CourseOdoo]:
-    courses: List[CourseOdoo] = course_service.get_courses(
-        teacher_id=current_user.external_reference
-    )
+    courses: List[CourseOdoo] = []
 
-    for course in courses:
-        if course.product_id:
-            course.sales = course_service.get_course_sales(course_id=course.product_id)
+    if current_user.external_reference:
+        courses.extend(
+            course_service.get_courses(teacher_id=current_user.external_reference)
+        )
+
+        for course in courses:
+            if course.product_id:
+                course.sales = course_service.get_course_sales(
+                    course_id=course.product_id
+                )
+
+    for contract in current_user.contracts:
+        if contract.refererred_user.external_reference:
+            courses.extend(
+                course_service.get_courses(contract.refererred_user.external_reference)
+            )
+            for course in courses:
+                if course.product_id:
+                    course.sales = course_service.get_course_sales(
+                        course_id=course.product_id
+                    )
 
     return courses
