@@ -34,7 +34,12 @@ class AuthService:
         ):
             raise BadPassword()
 
-        user_information: UserDTO = UserDTO(**user.__dict__)
+        user_information: UserDTO = UserDTO(
+            name=user.name,
+            email=user.email,
+            lastname=user.lastname,
+            role=user.role.name,
+        )
 
         return self.create_access_token(user_data=user_information)
 

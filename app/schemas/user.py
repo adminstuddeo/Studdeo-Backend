@@ -11,6 +11,8 @@ class User(BaseModel):
     lastname: str
     email: EmailStr
 
+    role: str
+
 
 class UserCreate(User):
     password: str
