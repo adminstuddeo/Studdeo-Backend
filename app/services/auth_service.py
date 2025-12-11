@@ -1,16 +1,22 @@
+from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, Optional
 
 from fastapi.security import OAuth2PasswordBearer
 from jwt import decode, encode  # type: ignore
 from jwt.exceptions import InvalidTokenError
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
 
 from app.configuration import configuration
 from app.database.models import User
+from app.email import EmailClient
+from app.enums import TemplateHTML
 from app.error import BadPassword, BadToken, UserNotFound
-from app.repositories import InterfaceUserRepository
-from app.schemas import Token
+from app.repositories import (
+    InterfacePasswordResetTokenRepository,
+    InterfaceUserRepository,
+)
+from app.schemas import Token, UserBaseEmail
 from app.schemas import User as UserDTO
 
 from .security_service import SecurityService
@@ -18,10 +24,11 @@ from .security_service import SecurityService
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 
+@dataclass
 class AuthService:
-    def __init__(self, repository: InterfaceUserRepository) -> None:
-        self.repository: InterfaceUserRepository = repository
-        self.security_service: SecurityService = SecurityService()
+    repository: InterfaceUserRepository
+    password_reset_token_repository: InterfacePasswordResetTokenRepository
+    security_service: SecurityService = field(default_factory=SecurityService)
 
     async def auth_user(self, email: str, password: str) -> Token:
         user: Optional[User] = await self.repository.get_user_by_email(email=email)
@@ -87,3 +94,36 @@ class AuthService:
         )
 
         return Token(access_token=encoded_jwt)
+
+    async def restore_password(self, email: str) -> None:
+        user: Optional[User] = await self.repository.get_user_by_email(email=email)
+
+        if not user:
+            return None
+
+        token = ""
+
+        hashed_token: str = self.security_service.hash_password(password=token)
+
+        await self.password_reset_token_repository.create_password_reset_token(
+            token=token, id_user=user.id
+        )
+
+        url: HttpUrl = HttpUrl(
+            configuration.FRONTEND_URL.encoded_string() + f"/token={hashed_token}"
+        )
+
+        year: int = datetime.now().year
+
+        email_information = UserBaseEmail(
+            name=user.name, lastname=user.lastname, frontend_url=url, year=year
+        )
+
+        client: EmailClient = EmailClient()
+
+        await client.send_email(
+            subject="Restore passsword",
+            email=user.email,
+            email_information=email_information,
+            template_name=TemplateHTML.RESTORE_PASSWORD,
+        )

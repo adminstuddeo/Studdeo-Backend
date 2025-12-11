@@ -2,6 +2,7 @@ import logfire
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
+from pydantic import EmailStr
 
 from app.configuration import configuration
 from app.enums import Environment
@@ -48,3 +49,28 @@ async def login_user(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Oops... Something went wrong.",
         )
+
+
+@auth_router.post(path="/restore_password")
+async def route_restore_password(
+    email: EmailStr, auth_service: AuthService = Depends(get_auth_service)
+) -> JSONResponse:
+    try:
+        await auth_service.restore_password(email=email)
+
+        return JSONResponse(
+            status_code=status.HTTP_202_ACCEPTED,
+            content={"message": "Si el mail existe, se enviaran instrucciones."},
+        )
+
+    except Exception as error:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(error)
+        )
+
+
+@auth_router.get("/verify_restore_password/{token}")
+async def route_update_password(
+    token: str,
+    auth_service: AuthService = Depends(get_auth_service),
+): ...

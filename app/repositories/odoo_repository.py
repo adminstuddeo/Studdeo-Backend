@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Set, Tuple, Union, cast
 from xmlrpc.client import ServerProxy
 
@@ -14,17 +15,15 @@ from app.schemas import (
 )
 
 
+@dataclass
 class OdooRepository:
-    def __init__(self) -> None:
-        self.url: str = configuration.ODOO_URL.encoded_string()
-        self.db: str = configuration.ODOO_DB
-        self.user: str = configuration.ODOO_USER
-        self.api_key: str = configuration.ODOO_API_KEY.get_secret_value()
-        self.common = ServerProxy(uri=f"{self.url}/xmlrpc/2/common", allow_none=True)
-        self.models = ServerProxy(uri=f"{self.url}/xmlrpc/2/object", allow_none=True)
-        self.uid: str = cast(
-            str, self.common.authenticate(self.db, self.user, self.api_key, {})
-        )
+    url: str = configuration.ODOO_URL.encoded_string()
+    db: str = configuration.ODOO_DB
+    user: str = configuration.ODOO_USER
+    api_key: str = configuration.ODOO_API_KEY.get_secret_value()
+    common = ServerProxy(uri=f"{url}/xmlrpc/2/common", allow_none=True)
+    models = ServerProxy(uri=f"{url}/xmlrpc/2/object", allow_none=True)
+    uid: str = cast(str, common.authenticate(db, user, api_key, {}))
 
     def execute_kw(
         self,

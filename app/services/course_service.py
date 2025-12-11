@@ -1,12 +1,13 @@
+from dataclasses import dataclass
 from typing import List, Set
 
 from app.repositories import OdooRepository
 from app.schemas import CourseOdoo, LessonOdoo, SaleOdoo, StudentOdoo
 
 
+@dataclass
 class CourseService:
-    def __init__(self, repository: OdooRepository) -> None:
-        self.repository: OdooRepository = repository
+    repository: OdooRepository
 
     def get_courses(self, teacher_id: int) -> List[CourseOdoo]:
         return self.repository.get_courses(teacher_id=teacher_id)

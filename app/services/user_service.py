@@ -1,3 +1,4 @@
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List, Optional, Sequence, Set
 from uuid import UUID
@@ -13,21 +14,17 @@ from app.repositories import (
     OdooRepository,
 )
 from app.schemas import Contract as ContractDTO
-from app.schemas import ContractCreate, TeacherOdoo, UserCreate, UserCreateEmail, UserDB
+from app.schemas import ContractCreate, TeacherOdoo, UserBaseEmail, UserCreate, UserDB
 
 from .security_service import SecurityService
 
 
+@dataclass
 class UserService:
-    def __init__(
-        self,
-        repository: InterfaceUserRepository,
-        contract_repository: InterfaceContractRepository,
-    ) -> None:
-        self.repository: InterfaceUserRepository = repository
-        self.contract_repository: InterfaceContractRepository = contract_repository
-        self.security_service: SecurityService = SecurityService()
-        self.external_repository: OdooRepository = OdooRepository()
+    repository: InterfaceUserRepository
+    contract_repository: InterfaceContractRepository
+    security_service: SecurityService = field(default_factory=SecurityService)
+    external_repository: OdooRepository = field(default_factory=OdooRepository)
 
     async def activate_user(self, id_user: UUID, external_reference: int) -> None:
         user: Optional[User] = await self.repository.get_user(id_user=id_user)
@@ -82,9 +79,9 @@ class UserService:
 
         client: EmailClient = EmailClient()
 
-        actual_year = datetime.now().year
+        actual_year: int = datetime.now().year
 
-        email_information = UserCreateEmail(
+        email_information = UserBaseEmail(
             frontend_url=configuration.FRONTEND_URL,
             year=actual_year,
             **user_create.model_dump(),

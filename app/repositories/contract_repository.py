@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -11,9 +12,9 @@ class InterfaceContractRepository(ABC):
     async def create_contract(self, contract_create: ContractCreate) -> None: ...
 
 
+@dataclass
 class ContractRepository(InterfaceContractRepository):
-    def __init__(self, db_session: AsyncSession) -> None:
-        self.async_session: AsyncSession = db_session
+    async_session: AsyncSession
 
     async def create_contract(self, contract_create: ContractCreate) -> None:
         contract: Contract = Contract(**contract_create.model_dump())

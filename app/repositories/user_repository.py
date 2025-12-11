@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from typing import Optional, Sequence, Tuple
 from uuid import UUID
 
@@ -28,9 +29,9 @@ class InterfaceUserRepository(ABC):
     async def update_user(self, user: User) -> None: ...
 
 
+@dataclass
 class UserRepository(InterfaceUserRepository):
-    def __init__(self, db_session: AsyncSession) -> None:
-        self.async_session: AsyncSession = db_session
+    async_session: AsyncSession
 
     async def create_user(self, user_create: UserCreate) -> None:
         statement: Select[Tuple[Role]] = select(Role).where(

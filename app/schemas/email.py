@@ -1,7 +1,7 @@
 from pydantic import BaseModel, HttpUrl
 
 
-class UserCreateEmail(BaseModel):
+class UserBaseEmail(BaseModel):
     name: str
     lastname: str
     frontend_url: HttpUrl

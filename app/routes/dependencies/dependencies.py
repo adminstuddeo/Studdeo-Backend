@@ -1,3 +1,5 @@
+from typing import Set
+
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, SecurityScopes
 from jwt.exceptions import InvalidTokenError
@@ -6,7 +8,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import database
 from app.database.models import User
 from app.error import BadToken, InsufficientPermissions, UserNotFound
-from app.repositories import ContractRepository, OdooRepository, UserRepository
+from app.repositories import (
+    ContractRepository,
+    OdooRepository,
+    PasswordResetTokenRepository,
+    UserRepository,
+)
 from app.services import AuthService, CourseService, UserService
 
 oauth_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
@@ -15,15 +22,20 @@ oauth_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 def get_auth_service(
     db_session: AsyncSession = Depends(dependency=database.get_async_session),
 ) -> AuthService:
-    return AuthService(repository=UserRepository(db_session=db_session))
+    return AuthService(
+        repository=UserRepository(async_session=db_session),
+        password_reset_token_repository=PasswordResetTokenRepository(
+            async_session=db_session
+        ),
+    )
 
 
 def get_user_service(
     db_session: AsyncSession = Depends(dependency=database.get_async_session),
 ) -> UserService:
     return UserService(
-        repository=UserRepository(db_session=db_session),
-        contract_repository=ContractRepository(db_session=db_session),
+        repository=UserRepository(async_session=db_session),
+        contract_repository=ContractRepository(async_session=db_session),
     )
 
 
@@ -39,7 +51,7 @@ async def get_current_user(
     try:
         user: User = await auth_service.get_current_user(access_token=access_token)
 
-        user_permissions: set[str] = {
+        user_permissions: Set[str] = {
             permission.name for permission in user.role.permissions
         }
 

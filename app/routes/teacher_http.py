@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, Security
 
 from app.database.models import User
 from app.enums import Permission
-from app.schemas.odoo import TeacherOdoo
+from app.schemas import TeacherOdoo
 from app.services import UserService
 
 from .dependencies import get_current_user, get_user_service
