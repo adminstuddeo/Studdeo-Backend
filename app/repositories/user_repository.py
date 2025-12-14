@@ -8,7 +8,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.database.models import Contract, Role, User
-from app.enums import Role as RoleEnum
 from app.schemas import UserCreate
 
 
@@ -35,16 +34,16 @@ class UserRepository(InterfaceUserRepository):
 
     async def create_user(self, user_create: UserCreate) -> None:
         statement: Select[Tuple[Role]] = select(Role).where(
-            Role.name == RoleEnum.TEACHER
+            Role.id == user_create.id_role
         )
 
         result: Result[Tuple[Role]] = await self.async_session.execute(
             statement=statement
         )
 
-        role: Role = result.scalar_one()
+        result.scalar_one()
 
-        user: User = User(**user_create.model_dump(), id_role=role.id)
+        user: User = User(**user_create.model_dump())
 
         try:
             self.async_session.add(user)

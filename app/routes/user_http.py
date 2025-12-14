@@ -7,10 +7,10 @@ from fastapi.responses import JSONResponse
 from app.database.models import User
 from app.enums import Permission
 from app.error import UserAlreadyExist, UserNotFound
-from app.schemas import Contract, UserContract, UserCreate, UserDB
-from app.services import UserService
+from app.schemas import Contract, RoleDB, UserContract, UserCreate, UserDB
+from app.services import RoleService, UserService
 
-from .dependencies import get_current_user, get_user_service
+from .dependencies import get_current_user, get_role_service, get_user_service
 
 user_router: APIRouter = APIRouter(prefix="/user", tags=["User"])
 
@@ -90,3 +90,10 @@ async def route_update_user(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(error)
         )
+
+
+@user_router.get("/role", response_model=List[RoleDB])
+async def route_get_roles(
+    role_service: RoleService = Depends(dependency=get_role_service),
+) -> List[RoleDB]:
+    return await role_service.get_roles()

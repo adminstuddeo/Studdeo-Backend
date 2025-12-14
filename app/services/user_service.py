@@ -73,6 +73,7 @@ class UserService:
             email=user_create.email,
             name=user_create.name,
             lastname=user_create.lastname,
+            id_role=user_create.id_role,
         )
 
         await self.repository.create_user(user_create=user)

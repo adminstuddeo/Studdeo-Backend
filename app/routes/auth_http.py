@@ -56,7 +56,7 @@ async def route_restore_password(
     email: EmailStr, auth_service: AuthService = Depends(get_auth_service)
 ) -> JSONResponse:
     try:
-        await auth_service.restore_password(email=email)
+        await auth_service.create_email_restore_password(email=email)
 
         return JSONResponse(
             status_code=status.HTTP_202_ACCEPTED,
@@ -69,8 +69,23 @@ async def route_restore_password(
         )
 
 
-@auth_router.get("/verify_restore_password/{token}")
+@auth_router.get("/restore_password/{token}")
 async def route_update_password(
     token: str,
+    new_password: str,
     auth_service: AuthService = Depends(get_auth_service),
-): ...
+) -> JSONResponse:
+    try:
+        await auth_service.restore_password(
+            hashed_token=token, new_password=new_password
+        )
+
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content={"message": "Contraseña actualizada con exito."},
+        )
+
+    except Exception as error:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(error)
+        )

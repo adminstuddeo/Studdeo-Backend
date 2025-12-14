@@ -160,7 +160,7 @@ class OdooRepository:
                 SaleOdoo(
                     external_reference=sale["id"],
                     date=sale["date_order"],
-                    detail_sale=order_mapped[sale["id"]],
+                    details_sale=order_mapped[sale["id"]],
                     buyer=student_map[sale["partner_id"][0]],
                 )
             )

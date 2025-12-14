@@ -25,7 +25,7 @@ class PasswordResetTokenRepository(InterfacePasswordResetTokenRepository):
     async_session: AsyncSession
 
     async def create_password_reset_token(self, token: str, id_user: UUID) -> None:
-        expired_at: datetime = datetime.now(timezone.utc) + timedelta(hours=2)
+        expired_at: datetime = datetime.now(timezone.utc) + timedelta(days=1)
 
         new_password_reset_token = PasswordResetToken(
             token=token, id_user=id_user, expired_at=expired_at, is_active=True

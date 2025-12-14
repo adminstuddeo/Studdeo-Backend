@@ -9,6 +9,7 @@ from pydantic import BaseModel, HttpUrl
 
 from app.configuration import configuration
 from app.database.models import User
+from app.database.models.password_reset_token import PasswordResetToken
 from app.email import EmailClient
 from app.enums import TemplateHTML
 from app.error import BadPassword, BadToken, UserNotFound
@@ -95,18 +96,27 @@ class AuthService:
 
         return Token(access_token=encoded_jwt)
 
-    async def restore_password(self, email: str) -> None:
+    async def create_email_restore_password(self, email: str) -> None:
         user: Optional[User] = await self.repository.get_user_by_email(email=email)
 
         if not user:
             return None
 
-        token = ""
+        user_information: UserDTO = UserDTO(
+            name=user.name,
+            email=user.email,
+            lastname=user.lastname,
+            role=user.role.name,
+        )
 
-        hashed_token: str = self.security_service.hash_password(password=token)
+        token: Token = self.create_access_token(**user_information.model_dump())
+
+        hashed_token: str = self.security_service.hash_password(
+            password=token.access_token
+        )
 
         await self.password_reset_token_repository.create_password_reset_token(
-            token=token, id_user=user.id
+            token=hashed_token, id_user=user.id
         )
 
         url: HttpUrl = HttpUrl(
@@ -127,3 +137,31 @@ class AuthService:
             email_information=email_information,
             template_name=TemplateHTML.RESTORE_PASSWORD,
         )
+
+    async def restore_password(self, hashed_token: str, new_password: str):
+        token_db: Optional[
+            PasswordResetToken
+        ] = await self.password_reset_token_repository.get_password_reset_token(
+            hashed_token
+        )
+
+        if not token_db:
+            raise
+
+        token_data: Dict[str, Any] = decode(
+            jwt=token_db.token,
+            key=configuration.ENCRYPTION_SECRET_KEY,
+            algorithms=[configuration.ENCRYPTION_ALGORITHM],
+        )
+        user: Optional[User] = await self.repository.get_user_by_email(
+            email=token_data["email"]
+        )
+
+        if not user:
+            raise
+
+        hashed_passqord: str = self.security_service.hash_password(new_password)
+
+        user.password = hashed_passqord
+
+        await self.repository.update_user(user=user)

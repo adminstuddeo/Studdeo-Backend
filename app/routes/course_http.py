@@ -14,7 +14,7 @@ course_router: APIRouter = APIRouter(prefix="/course", tags=["Course"])
 
 
 @course_router.get(
-    path="/", response_model=List[CourseOdoo], response_model_exclude_none=True
+    path="/", response_model=List[CourseOdoo], response_model_exclude={"sales"}
 )
 async def route_get_courses(
     current_user: User = Security(

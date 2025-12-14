@@ -1,7 +1,7 @@
 from typing import List, Optional
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 from .contract import Contract, Reference
 
@@ -15,7 +15,8 @@ class User(BaseModel):
 
 
 class UserCreate(User):
-    password: str
+    password: str = Field(min_length=8, pattern=r".*[A-Z].*")
+    id_role: int
 
     model_config = ConfigDict(frozen=True)
 

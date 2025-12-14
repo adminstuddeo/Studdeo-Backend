@@ -12,9 +12,10 @@ from app.repositories import (
     ContractRepository,
     OdooRepository,
     PasswordResetTokenRepository,
+    RoleRepository,
     UserRepository,
 )
-from app.services import AuthService, CourseService, UserService
+from app.services import AuthService, CourseService, RoleService, UserService
 
 oauth_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
@@ -67,3 +68,9 @@ async def get_current_user(
         InsufficientPermissions,
     ) as error:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(error))
+
+
+async def get_role_service(
+    db_session: AsyncSession = Depends(dependency=database.get_async_session),
+) -> RoleService:
+    return RoleService(repository=RoleRepository(async_session=db_session))
