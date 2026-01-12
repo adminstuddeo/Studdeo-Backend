@@ -29,7 +29,7 @@ app: FastAPI = FastAPI(
 
 app.add_middleware(
     middleware_class=CORSMiddleware,
-    allow_origins=[configuration.FRONTEND_URL.encoded_string()],
+    allow_origins=[configuration.FRONTEND_URL.encoded_string().rstrip("/")],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -46,3 +46,4 @@ for route in routers:
 
 logfire.configure()
 logfire.instrument_fastapi(app=app)
+#

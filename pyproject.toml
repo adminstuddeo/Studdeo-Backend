@@ -9,6 +9,10 @@ dependencies = [
     "asyncpg>=0.31.0",
     "beautifulsoup4>=4.14.3",
     "fastapi>=0.121.2",
+    "google-api-python-client>=2.187.0",
+    "google-auth-httplib2>=0.3.0",
+    "google-auth-oauthlib>=1.2.3",
+    "hypothesis>=6.148.7",
     "logfire[fastapi]>=4.15.1",
     "pwdlib[argon2]>=0.3.0",
     "pydantic>=2.12.4",
@@ -26,3 +30,6 @@ dev = [
     "psycopg[binary]>=3.3.2",
     "pytest>=9.0.1",
 ]
+
+[project.scripts]
+app = "backend.server:app"
