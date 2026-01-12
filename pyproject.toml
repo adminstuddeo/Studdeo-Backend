@@ -30,6 +30,3 @@ dev = [
     "psycopg[binary]>=3.3.2",
     "pytest>=9.0.1",
 ]
-
-[project.scripts]
-app = "backend.server:app"
