@@ -6,6 +6,7 @@ class Permission(StrEnum):
     UPDATE_USER = auto()
     DELETE_USER = auto()
     READ_EXTERNAL_USERS = auto()
+    READ_ALL_COURSES = auto()
     READ_COURSES = auto()
     READ_LESSONS = auto()
     READ_SALES = auto()

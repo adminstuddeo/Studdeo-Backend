@@ -41,7 +41,7 @@ class OdooRepository:
 
         return response
 
-    def get_database_information(self) -> List[Dict[str, Any]]:
+    def _get_database_information(self) -> List[Dict[str, Any]]:
         database_fields: List[str] = ["model", "name", "relation", "help"]
 
         result: List[Dict[str, Any]] = self.execute_kw(
@@ -50,7 +50,7 @@ class OdooRepository:
 
         return result
 
-    def get_table_information(self, table_name: str) -> List[Dict[str, Any]]:
+    def _get_table_information(self, table_name: str) -> List[Dict[str, Any]]:
         table_fields: List[str] = ["string", "type", "relation", "help"]
 
         result: List[Dict[str, Any]] = self.execute_kw(
@@ -58,6 +58,36 @@ class OdooRepository:
         )
 
         return result
+
+    def get_all_courses(self) -> List[CourseOdoo]:
+        course_fields: List[str] = [
+            "id",
+            "name",
+            "description",
+            "product_id",
+            "user_id",
+        ]
+
+        courses: List[Dict[str, Any]] = self.execute_kw(
+            model="slide.channel",
+            method="search_read",
+            kwargs={"fields": course_fields, "order": "id asc"},
+        )
+
+        return [
+            CourseOdoo(
+                external_reference=course["id"],
+                description=BeautifulSoup(
+                    course["description"], "html.parser"
+                ).get_text()
+                if course["description"]
+                else "",
+                name=course["name"],
+                product_id=course["product_id"][0] if course["product_id"] else None,
+                user_id=course["user_id"][0],
+            )
+            for course in courses
+        ]
 
     def get_courses(self, teacher_id: int) -> List[CourseOdoo]:
         course_fields: List[str] = [
@@ -87,6 +117,7 @@ class OdooRepository:
                 else "",
                 name=course["name"],
                 product_id=course["product_id"][0] if course["product_id"] else None,
+                user_id=teacher_id,
             )
             for course in courses
         ]
@@ -219,7 +250,7 @@ class OdooRepository:
 
     def get_teachers(self, teachers_ids: Set[int]) -> List[TeacherOdoo]:
         teacher_fields: List[str] = ["id", "name", "email", "active"]
-
+        # Agregar parent_name que seria apellido
         teachers: List[Dict[str, Any]] = self.execute_kw(
             model="res.users",
             method="read",

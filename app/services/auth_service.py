@@ -46,7 +46,7 @@ class AuthService:
             name=user.name,
             email=user.email,
             lastname=user.lastname,
-            role=user.role.name,
+            role_name=user.role.name,
         )
 
         return self.create_access_token(user_data=user_information)
@@ -106,7 +106,7 @@ class AuthService:
             name=user.name,
             email=user.email,
             lastname=user.lastname,
-            role=user.role.name,
+            role_name=user.role.name,
         )
 
         token: Token = self.create_access_token(**user_information.model_dump())

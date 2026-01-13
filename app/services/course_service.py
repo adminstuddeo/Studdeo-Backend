@@ -9,6 +9,9 @@ from app.schemas import CourseOdoo, LessonOdoo, SaleOdoo, StudentOdoo
 class CourseService:
     repository: OdooRepository
 
+    def get_all_courses(self) -> List[CourseOdoo]:
+        return self.repository.get_all_courses()
+
     def get_courses(self, teacher_id: int) -> List[CourseOdoo]:
         return self.repository.get_courses(teacher_id=teacher_id)
 

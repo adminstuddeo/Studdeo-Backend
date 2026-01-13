@@ -50,6 +50,7 @@ class CourseOdoo(BaseModel):
     name: str
     description: str
     product_id: Optional[int] = None
+    user_id: int
 
 
 class CourseWithSales(CourseOdoo):

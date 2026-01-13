@@ -7,19 +7,23 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.configuration import configuration
 from app.enums import Environment
 from app.routes import (
+    administrator_router,
     auth_router,
     course_router,
+    role_router,
     sale_router,
     teacher_router,
     user_router,
 )
 
 routers: List[APIRouter] = [
+    administrator_router,
     auth_router,
     course_router,
     sale_router,
     teacher_router,
     user_router,
+    role_router,
 ]
 
 app: FastAPI = FastAPI(

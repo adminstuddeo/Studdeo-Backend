@@ -12,9 +12,21 @@ from app.database.models.base import Base
 
 load_dotenv()
 
+
+url_from_env: Optional[str] = getenv("DATABASE_URL")
+
+if not url_from_env:
+    raise Exception("DATABASE_URL not founded in .env")
+
+url = url_from_env.replace("asyncpg", "psycopg")
+
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+
+config.set_main_option("sqlalchemy.url", url)
+
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -31,12 +43,6 @@ target_metadata = Base.metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
-url_from_env: Optional[str] = getenv("DATABASE_URL")
-
-if not url_from_env:
-    raise Exception("DATABASE_URL not founded in .env")
-
-url = url_from_env.replace("asyncpg", "psycopg")
 
 
 def run_migrations_offline() -> None:
