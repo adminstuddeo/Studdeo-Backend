@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-from typing import List, Set
+from datetime import datetime
+from typing import List, Optional, Set
 
 from app.repositories import OdooRepository
 from app.schemas import CourseOdoo, LessonOdoo, SaleOdoo, StudentOdoo
@@ -9,7 +10,7 @@ from app.schemas import CourseOdoo, LessonOdoo, SaleOdoo, StudentOdoo
 class CourseService:
     repository: OdooRepository
 
-    def get_all_courses(self) -> List[CourseOdoo]:
+    def get_all_courses(self, date_from: Optional[datetime] = None) -> List[CourseOdoo]:
         return self.repository.get_all_courses()
 
     def get_courses(self, teacher_id: int) -> List[CourseOdoo]:

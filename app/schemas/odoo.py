@@ -35,7 +35,6 @@ class SaleOdoo(BaseModel):
     details_sale: List[DetailSaleOdoo]
     buyer: StudentOdoo
 
-    @computed_field
     def calculated_subtotal(self) -> float:
         subtotal: float = 0
 
@@ -51,6 +50,7 @@ class CourseOdoo(BaseModel):
     description: str
     product_id: Optional[int] = None
     user_id: int
+    create_date: datetime
 
 
 class CourseWithSales(CourseOdoo):

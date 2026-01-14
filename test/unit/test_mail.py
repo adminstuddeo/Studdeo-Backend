@@ -24,3 +24,8 @@
 
 # with open("token.json", "w") as token:
 #    token.write(creds.to_json())
+from app.services import SecurityService
+
+password = SecurityService().hash_password("elonmusk1$")
+
+print(password)

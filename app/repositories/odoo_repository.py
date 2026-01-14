@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 from typing import Any, Dict, List, Optional, Set, Tuple, Union, cast
 from xmlrpc.client import ServerProxy
 
@@ -59,18 +60,25 @@ class OdooRepository:
 
         return result
 
-    def get_all_courses(self) -> List[CourseOdoo]:
+    def get_all_courses(self, date_from: Optional[datetime] = None) -> List[CourseOdoo]:
         course_fields: List[str] = [
             "id",
             "name",
             "description",
             "product_id",
             "user_id",
+            "create_date",
         ]
+
+        arguments: List[Union[Tuple[str, str, Any], str, int]] = []
+
+        if date_from:
+            arguments.append(("create_date", ">=", date_from))
 
         courses: List[Dict[str, Any]] = self.execute_kw(
             model="slide.channel",
             method="search_read",
+            args=[arguments],
             kwargs={"fields": course_fields, "order": "id asc"},
         )
 
@@ -85,6 +93,7 @@ class OdooRepository:
                 name=course["name"],
                 product_id=course["product_id"][0] if course["product_id"] else None,
                 user_id=course["user_id"][0],
+                create_date=course["create_date"],
             )
             for course in courses
         ]
@@ -95,6 +104,7 @@ class OdooRepository:
             "name",
             "description",
             "product_id",
+            "create_date",
         ]
         arguments: List[Union[Tuple[str, str, Any], str, int]] = [
             ("user_id", "=", teacher_id)
@@ -118,6 +128,7 @@ class OdooRepository:
                 name=course["name"],
                 product_id=course["product_id"][0] if course["product_id"] else None,
                 user_id=teacher_id,
+                create_date=course["create_date"],
             )
             for course in courses
         ]
@@ -141,7 +152,12 @@ class OdooRepository:
         ]
 
     def get_course_sales(self, product_id: int) -> List[SaleOdoo]:
-        details_sale_fields: List[str] = ["order_id", "price_total", "product_uom_qty"]
+        details_sale_fields: List[str] = [
+            "order_id",
+            "price_total",
+            "product_uom_qty",
+            "discount",
+        ]
         arguments: List[Union[Tuple[str, str, Any], str, int]] = [
             ("product_id", "=", product_id),
             ("order_id.state", "in", ["sale", "done"]),

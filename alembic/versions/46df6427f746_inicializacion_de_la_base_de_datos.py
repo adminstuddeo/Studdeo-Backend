@@ -172,6 +172,7 @@ def upgrade() -> None:
             ('update_user', TRUE),
             ('delete_user', TRUE),
             ('read_users', TRUE),
+            ('read_all_courses', TRUE),
             ('read_courses', TRUE),
             ('read_lessons', TRUE),
             ('read_sales', TRUE),
