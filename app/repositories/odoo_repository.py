@@ -22,9 +22,18 @@ class OdooRepository:
     db: str = configuration.ODOO_DB
     user: str = configuration.ODOO_USER
     api_key: str = configuration.ODOO_API_KEY.get_secret_value()
-    common: ServerProxy = ServerProxy(uri=f"{url}/xmlrpc/2/common", allow_none=True)
-    models: ServerProxy = ServerProxy(uri=f"{url}/xmlrpc/2/object", allow_none=True)
-    uid: str = cast(str, common.authenticate(db, user, api_key, {}))
+    _uid: Optional[int] = None
+
+    def get_uid(self) -> int:
+        if self._uid is None:
+            common: ServerProxy = ServerProxy(
+                uri=f"{self.url}/xmlrpc/2/common", allow_none=True
+            )
+            self._uid = cast(
+                int, common.authenticate(self.db, self.user, self.api_key, {})
+            )
+
+        return self._uid
 
     def execute_kw(
         self,
@@ -33,11 +42,15 @@ class OdooRepository:
         args: List[List[Union[str, int, Tuple[str, str, Any]]]] = [],
         kwargs: Optional[dict[str, Union[List[str], str]]] = None,
     ) -> List[Dict[str, Any]]:
+        uid: int = self.get_uid()
+
+        models: ServerProxy = ServerProxy(
+            uri=f"{self.url}/xmlrpc/2/object", allow_none=True
+        )
+
         response: List[Dict[str, Any]] = cast(
             List[Dict[str, Any]],
-            self.models.execute_kw(
-                self.db, self.uid, self.api_key, model, method, args, kwargs
-            ),
+            models.execute_kw(self.db, uid, self.api_key, model, method, args, kwargs),
         )
 
         return response
