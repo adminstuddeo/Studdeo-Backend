@@ -1,11 +1,10 @@
 from datetime import datetime
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Security, status
+from fastapi import APIRouter, Depends, Security
 
 from app.database.models import User
 from app.enums import Permission
-from app.error import UserNotFound
 from app.schemas import CourseOdoo, LessonOdoo, StudentOdoo
 from app.services import CourseService
 
@@ -40,11 +39,6 @@ async def route_get_lessons(
         dependency=get_current_user, scopes=[Permission.READ_ALL_LESSONS]
     ),
 ) -> List[LessonOdoo]:
-    if not current_user.external_reference:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail=str(UserNotFound())
-        )
-
     return course_service.get_lessons(course_id=course_id)
 
 
@@ -58,9 +52,4 @@ async def route_get_students(
         dependency=get_current_user, scopes=[Permission.READ_ALL_STUDENTS]
     ),
 ) -> List[StudentOdoo]:
-    if not current_user.external_reference:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail=str(UserNotFound())
-        )
-
     return course_service.get_students(course_id=id_course)
