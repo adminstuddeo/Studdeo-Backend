@@ -9,7 +9,6 @@ Create Date: 2025-12-07 23:42:51.698665
 from typing import Sequence, Union
 
 import sqlalchemy as sa
-
 from alembic import op  # type: ignore
 
 # revision identifiers, used by Alembic.
@@ -174,8 +173,10 @@ def upgrade() -> None:
             ('read_users', TRUE),
             ('read_all_courses', TRUE),
             ('read_courses', TRUE),
+            ('read_all_lessons', TRUE),
             ('read_lessons', TRUE),
             ('read_sales', TRUE),
+            ('read_all_students', TRUE),
             ('read_students', TRUE),
             ('read_external_users', TRUE)
         """)
