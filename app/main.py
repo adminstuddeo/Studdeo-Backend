@@ -31,12 +31,13 @@ app: FastAPI = FastAPI(
     docs_url="/docs" if configuration.environment == Environment.DEVELOPMENT else None,
 )
 
-# En prod
-# configuration.FRONTEND_URL.encoded_string().rstrip("/")
-
 app.add_middleware(
     middleware_class=CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        configuration.FRONTEND_URL.encoded_string().rstrip("/"),
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
