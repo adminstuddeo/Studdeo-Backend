@@ -31,7 +31,9 @@ async def router_get_courses(
     return course_service.get_all_courses(date_from=date_from)
 
 
-@administrator_router.get(path="/{course_id}/lessons", response_model=List[LessonOdoo])
+@administrator_router.get(
+    path="/course/{course_id}/lessons", response_model=List[LessonOdoo]
+)
 async def route_get_lessons(
     course_id: int,
     course_service: CourseService = Depends(dependency=get_course_service),
@@ -43,7 +45,7 @@ async def route_get_lessons(
 
 
 @administrator_router.get(
-    path="/{id_course}/students", response_model=List[StudentOdoo]
+    path="/course/{id_course}/students", response_model=List[StudentOdoo]
 )
 async def route_get_students(
     id_course: int,

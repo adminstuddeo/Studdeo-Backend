@@ -70,7 +70,7 @@ async def get_current_user(
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(error))
 
 
-async def get_role_service(
+def get_role_service(
     db_session: AsyncSession = Depends(dependency=database.get_async_session),
 ) -> RoleService:
     return RoleService(repository=RoleRepository(async_session=db_session))
