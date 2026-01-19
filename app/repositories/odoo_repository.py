@@ -337,8 +337,8 @@ class OdooRepository:
         lastname: str = ""
 
         if len(name.split()) != 1:
-            name = name.split()[0]
-            lastname = name.split()[1]
+            name = teacher[0]["name"].split()[0]
+            lastname = teacher[0]["name"].split()[1]
 
         return TeacherOdoo(
             external_reference=teacher[0]["id"],
