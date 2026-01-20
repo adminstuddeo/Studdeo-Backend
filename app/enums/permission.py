@@ -10,6 +10,7 @@ class Permission(StrEnum):
     READ_COURSES = auto()
     READ_ALL_LESSONS = auto()
     READ_LESSONS = auto()
+    READ_ALL_SALES = auto()
     READ_SALES = auto()
     READ_ALL_STUDENTS = auto()
     READ_STUDENTS = auto()

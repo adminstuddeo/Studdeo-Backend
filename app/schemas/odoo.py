@@ -8,7 +8,6 @@ class StudentOdoo(BaseModel):
     external_reference: int
     name: str
     email: Optional[EmailStr] = None
-    phone: Optional[str] = None
 
 
 class TeacherOdoo(BaseModel):
@@ -37,6 +36,7 @@ class SaleOdoo(BaseModel):
     buyer: StudentOdoo
     discount: float
     total: float
+    contract_discount: float
 
 
 class CourseOdoo(BaseModel):

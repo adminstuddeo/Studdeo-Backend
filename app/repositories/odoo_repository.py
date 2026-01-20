@@ -170,7 +170,7 @@ class OdooRepository:
             LessonOdoo(external_reference=lesson["id"], **lesson) for lesson in lessons
         ]
 
-    def get_course_sales(self, product_id: int) -> List[SaleOdoo]:
+    def get_course_sales(self, product_id: int, discount: float) -> List[SaleOdoo]:
         details_sale_fields: List[str] = [
             "order_id",
             "price_total",
@@ -234,7 +234,8 @@ class OdooRepository:
                     details_sale=order_mapped[sale["id"]],
                     buyer=student_map[sale["partner_id"][0]],
                     discount=sale["reward_amount"],
-                    total=sale["amount_total"],
+                    total=sale["amount_total"] * discount,
+                    contract_discount=discount,
                 )
             )
 

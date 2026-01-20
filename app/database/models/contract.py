@@ -1,15 +1,12 @@
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import Optional
 from uuid import UUID
 
 from sqlalchemy import TIMESTAMP, ForeignKey, func
 from sqlalchemy import UUID as SQLUUID
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 
 from .base import Base
-
-if TYPE_CHECKING:
-    from .user import User
 
 
 class Contract(Base):
@@ -27,8 +24,6 @@ class Contract(Base):
         server_default=func.now(),
         default=func.now(),
     )
-    valid_to: Mapped[datetime] = mapped_column(TIMESTAMP(timezone=True), nullable=True)
-
-    refererred_user: Mapped["User"] = relationship(
-        "User", foreign_keys=[referred_id_user]
+    valid_to: Mapped[Optional[datetime]] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
     )

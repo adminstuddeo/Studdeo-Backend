@@ -25,28 +25,13 @@ def route_get_sales_user(
         )
 
         for course in courses:
-            if course.product_id:
+            if course.product_id and current_user.contract:
                 sales: List[SaleOdoo] = course_service.get_course_sales(
-                    course_id=course.product_id
+                    course_id=course.product_id,
+                    discount=current_user.contract.percentaje,
                 )
                 courses_with_sales.append(
                     CourseWithSales(**course.model_dump(), sales=sales)
                 )
-
-    for contract in current_user.contracts:
-        if contract.refererred_user.external_reference:
-            courses_reference_user: List[CourseOdoo] = course_service.get_courses(
-                contract.refererred_user.external_reference
-            )
-            for course in courses_reference_user:
-                if course.product_id:
-                    sales_referenced_user: List[SaleOdoo] = (
-                        course_service.get_course_sales(course_id=course.product_id)
-                    )
-                    courses_with_sales.append(
-                        CourseWithSales(
-                            **course.model_dump(), sales=sales_referenced_user
-                        )
-                    )
 
     return courses_with_sales

@@ -23,6 +23,7 @@ class UserCreate(User):
 class UserDB(User):
     id: UUID
     external_reference: Optional[int] = None
+    contract: Contract
 
 
 class UserContract(BaseModel):

@@ -104,7 +104,13 @@ class UserService:
 
         return user_created
 
-    def get_external_users(self, teacher_ids: Set[int]) -> List[TeacherOdoo]:
+    async def get_external_users(self) -> List[TeacherOdoo]:
+        teacher_ids: Set[int] = {
+            user.external_reference
+            for user in await self.get_users(is_active=True)
+            if user.external_reference
+        }
+
         all_teachers: Set[int] = self.external_repository.get_teachers_ids()
 
         teachers_not_mapped: Set[int] = all_teachers.difference(teacher_ids)
@@ -114,14 +120,26 @@ class UserService:
     async def get_users(self, is_active: bool) -> List[UserDB]:
         users: Sequence[User] = await self.repository.get_users(is_active=is_active)
 
-        return [
-            UserDB(
-                id=user.id,
-                lastname=user.lastname,
-                name=user.name,
-                email=user.email,
-                role=user.role.name,
-                external_reference=user.external_reference,
+        users_db: List[UserDB] = []
+
+        for user in users:
+            if not user.contract:
+                continue
+
+            users_db.append(
+                UserDB(
+                    id=user.id,
+                    lastname=user.lastname,
+                    name=user.name,
+                    email=user.email,
+                    role=user.role.name,
+                    external_reference=user.external_reference,
+                    contract=ContractDTO(
+                        percentaje=user.contract.percentaje,
+                        valid_from=user.contract.valid_from,
+                        valid_to=user.contract.valid_to,
+                    ),
+                )
             )
-            for user in users
-        ]
+
+        return users_db

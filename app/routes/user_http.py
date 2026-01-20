@@ -30,9 +30,7 @@ async def route_get_users(
         dependency=get_current_user, scopes=[Permission.READ_USERS]
     ),
 ) -> List[UserDB]:
-    list_users: List[UserDB] = await user_service.get_users(is_active=is_active)
-
-    return [user for user in list_users if user.id != current_user.id]
+    return await user_service.get_users(is_active=is_active)
 
 
 @user_router.post(path="/")

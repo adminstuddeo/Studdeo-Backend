@@ -24,5 +24,5 @@ class CourseService:
 
         return self.repository.get_students(students_ids=students_ids)
 
-    def get_course_sales(self, course_id: int) -> List[SaleOdoo]:
-        return self.repository.get_course_sales(course_id)
+    def get_course_sales(self, course_id: int, discount: float) -> List[SaleOdoo]:
+        return self.repository.get_course_sales(course_id, discount=discount)

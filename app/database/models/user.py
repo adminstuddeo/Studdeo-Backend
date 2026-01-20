@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List, Optional
+from typing import TYPE_CHECKING, Optional
 from uuid import UUID
 
 from sqlalchemy import UUID as SQLUUID
@@ -28,9 +28,9 @@ class User(Base):
     )
 
     role: Mapped[Role] = relationship()
-    contracts: Mapped[List["Contract"]] = relationship(
+    contract: Mapped[Optional["Contract"]] = relationship(
         "Contract",
-        primaryjoin="User.id == Contract.referer_id_user",
+        primaryjoin="User.id == Contract.referred_id_user",
     )
 
     def activate(self) -> None:
