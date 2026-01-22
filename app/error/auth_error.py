@@ -11,3 +11,8 @@ class BadToken(Exception):
 class InsufficientPermissions(Exception):
     def __init__(self, message: str = "You don't have sufficients permissions") -> None:
         super().__init__(message)
+
+
+class InvalidToken(Exception):
+    def __init__(self, message: str = "This token is invalid.") -> None:
+        super().__init__(message)

@@ -3,7 +3,7 @@ from typing import List, Optional
 from uuid import UUID
 
 import logfire
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Security, status
+from fastapi import APIRouter, Depends, HTTPException, Security, status
 from fastapi.responses import JSONResponse
 
 from app.configuration import configuration
@@ -40,7 +40,6 @@ async def route_get_users(
 @user_router.post(path="/")
 async def route_create_user(
     user_create: UserCreate,
-    background_task: BackgroundTasks,
     user_service: UserService = Depends(dependency=get_user_service),
     current_user: User = Security(
         dependency=get_current_user, scopes=[Permission.CREATE_USER]
@@ -76,12 +75,11 @@ async def route_create_user(
             **user_create.model_dump(),
         )
 
-        background_task.add_task(
-            client.send_email,
-            "Bienvenido a Studeeo!!",
-            user_create.email,
-            email_information,
-            TemplateHTML.VERIFICATION,
+        await client.send_email(
+            subject="Bienvenido a Studeeo!!",
+            email=user_create.email,
+            email_information=email_information,
+            template_name=TemplateHTML.VERIFICATION,
         )
 
         return JSONResponse(

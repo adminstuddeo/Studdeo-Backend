@@ -19,6 +19,11 @@ class InterfacePasswordResetTokenRepository(ABC):
         self, token: str
     ) -> Optional[PasswordResetToken]: ...
 
+    @abstractmethod
+    async def update_password_reset_token(
+        self, password_reset_token: PasswordResetToken
+    ) -> None: ...
+
 
 @dataclass
 class PasswordResetTokenRepository(InterfacePasswordResetTokenRepository):
@@ -48,3 +53,13 @@ class PasswordResetTokenRepository(InterfacePasswordResetTokenRepository):
             ident=token,
             options=[selectinload(PasswordResetToken.user)],
         )
+
+    async def update_password_reset_token(
+        self, password_reset_token: PasswordResetToken
+    ) -> None:
+        try:
+            await self.async_session.commit()
+
+        except Exception as database_error:
+            await self.async_session.rollback()
+            raise database_error

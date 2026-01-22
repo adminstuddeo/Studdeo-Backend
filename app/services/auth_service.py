@@ -11,7 +11,7 @@ from app.configuration import configuration
 from app.database.models import PasswordResetToken, User
 from app.email import EmailClient
 from app.enums import TemplateHTML
-from app.error import BadPassword, BadToken, UserNotFound
+from app.error import BadPassword, BadToken, InvalidToken, UserNotFound
 from app.repositories import (
     InterfacePasswordResetTokenRepository,
     InterfaceUserRepository,
@@ -138,26 +138,16 @@ class AuthService:
         token_db: Optional[
             PasswordResetToken
         ] = await self.password_reset_token_repository.get_password_reset_token(
-            hashed_token
+            token=hashed_token
         )
 
-        if not token_db:
-            raise
-
-        token_data: Dict[str, Any] = decode(
-            jwt=token_db.token,
-            key=configuration.ENCRYPTION_SECRET_KEY,
-            algorithms=[configuration.ENCRYPTION_ALGORITHM],
-        )
-        user: Optional[User] = await self.repository.get_user_by_email(
-            email=token_data["email"]
-        )
-
-        if not user:
-            raise
+        if not token_db or token_db.expired_at < datetime.now(timezone.utc):
+            raise InvalidToken()
 
         hashed_password: str = self.security_service.hash_password(new_password)
 
-        user.password = hashed_password
+        token_db.user.password = hashed_password
 
-        await self.repository.update_user(user=user)
+        await self.repository.update_user(user=token_db.user)
+
+        token_db.is_active = False

@@ -69,7 +69,7 @@ async def route_restore_password(
         )
 
 
-@auth_router.get("/restore_password/{token}")
+@auth_router.put("/restore_password/{token}")
 async def route_update_password(
     token: str,
     new_password: str,
