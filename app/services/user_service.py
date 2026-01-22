@@ -1,12 +1,8 @@
 from dataclasses import dataclass, field
-from datetime import datetime
 from typing import List, Optional, Sequence, Set
 from uuid import UUID
 
-from app.configuration import configuration
 from app.database.models import User
-from app.email import EmailClient
-from app.enums import TemplateHTML
 from app.error import UserAlreadyExist, UserNotFound
 from app.repositories import (
     InterfaceContractRepository,
@@ -18,7 +14,6 @@ from app.schemas import (
     ContractCreate,
     TeacherOdoo,
     UserCreate,
-    UserCreatedEmail,
     UserDB,
 )
 
@@ -84,23 +79,6 @@ class UserService:
         )
 
         user_created: User = await self.repository.create_user(user_create=user)
-
-        client: EmailClient = EmailClient()
-
-        actual_year: int = datetime.now().year
-
-        email_information = UserCreatedEmail(
-            frontend_url=configuration.FRONTEND_URL,
-            year=actual_year,
-            **user_create.model_dump(),
-        )
-
-        await client.send_email(
-            subject="Bienvenido a Studeeo!!",
-            email=user_create.email,
-            email_information=email_information,
-            template_name=TemplateHTML.VERIFICATION,
-        )
 
         return user_created
 

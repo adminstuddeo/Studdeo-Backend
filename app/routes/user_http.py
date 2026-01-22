@@ -1,18 +1,22 @@
+from datetime import datetime
 from typing import List, Optional
 from uuid import UUID
 
 import logfire
-from fastapi import APIRouter, Depends, HTTPException, Security, status
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Security, status
 from fastapi.responses import JSONResponse
 
+from app.configuration import configuration
 from app.database.models import User
-from app.enums import Permission
+from app.email import EmailClient
+from app.enums import Permission, TemplateHTML
 from app.error import TeacherNotFound, UserAlreadyExist, UserNotFound
 from app.schemas import (
     Contract,
     TeacherOdoo,
     UserContract,
     UserCreate,
+    UserCreatedEmail,
     UserDB,
 )
 from app.services import UserService
@@ -36,6 +40,7 @@ async def route_get_users(
 @user_router.post(path="/")
 async def route_create_user(
     user_create: UserCreate,
+    background_task: BackgroundTasks,
     user_service: UserService = Depends(dependency=get_user_service),
     current_user: User = Security(
         dependency=get_current_user, scopes=[Permission.CREATE_USER]
@@ -59,6 +64,24 @@ async def route_create_user(
             referer_id_user=current_user.id,
             referred_id_user=user_created.id,
             contract=user_create.contract,
+        )
+
+        client: EmailClient = EmailClient()
+
+        actual_year: int = datetime.now().year
+
+        email_information = UserCreatedEmail(
+            frontend_url=configuration.FRONTEND_URL,
+            year=actual_year,
+            **user_create.model_dump(),
+        )
+
+        background_task.add_task(
+            client.send_email,
+            "Bienvenido a Studeeo!!",
+            user_create.email,
+            email_information,
+            TemplateHTML.VERIFICATION,
         )
 
         return JSONResponse(
