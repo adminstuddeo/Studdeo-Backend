@@ -33,7 +33,6 @@ class SaleOdoo(BaseModel):
     external_reference: int
     date: datetime
     details_sale: List[DetailSaleOdoo]
-    buyer: StudentOdoo
     discount: float
     total: float
     contract_discount: float

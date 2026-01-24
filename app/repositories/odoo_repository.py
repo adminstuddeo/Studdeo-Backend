@@ -191,6 +191,7 @@ class OdooRepository:
         )
 
         order_mapped: Dict[int, List[DetailSaleOdoo]] = {}
+
         for detail in details_sale:
             order_id: int = detail["order_id"][0]
             detail_sale_odoo: DetailSaleOdoo = DetailSaleOdoo(
@@ -200,13 +201,13 @@ class OdooRepository:
             )
             if not order_mapped.get(order_id):
                 order_mapped[order_id] = [detail_sale_odoo]
+
             else:
                 order_mapped[order_id].append(detail_sale_odoo)
 
         sale_fields: List[str] = [
             "id",
             "date_order",
-            "partner_id",
             "amount_total",
             "reward_amount",
         ]
@@ -217,22 +218,14 @@ class OdooRepository:
             kwargs={"fields": sale_fields, "order": "date_order asc"},
         )
 
-        student_set: Set[int] = {sale["partner_id"][0] for sale in sales_information}
-
-        students: List[StudentOdoo] = self.get_students(students_ids=student_set)
-
-        student_map: Dict[int, StudentOdoo] = {}
-        for student in students:
-            student_map[student.external_reference] = student
-
         sales: List[SaleOdoo] = []
+
         for sale in sales_information:
             sales.append(
                 SaleOdoo(
                     external_reference=sale["id"],
                     date=sale["date_order"],
                     details_sale=order_mapped[sale["id"]],
-                    buyer=student_map[sale["partner_id"][0]],
                     discount=sale["reward_amount"],
                     total=sale["amount_total"] * discount,
                     contract_discount=discount,
