@@ -8,9 +8,6 @@ class Configuration(BaseSettings):
     BACKEND_URL: HttpUrl
     DATABASE_URL: PostgresDsn
     EMAIL: EmailStr
-    EMAIL_HOST: str
-    EMAIL_PASSWORD: SecretStr
-    EMAIL_PORT: int
     ENCRYPTION_ALGORITHM: str
     ENCRYPTION_SECRET_KEY: str
     FRONTEND_URL: HttpUrl
@@ -19,6 +16,7 @@ class Configuration(BaseSettings):
     ODOO_DB: str
     ODOO_USER: str
     ODOO_URL: HttpUrl
+    GMAIL_TOKEN_JSON: str
 
     environment: Environment = Environment.DEVELOPMENT
 

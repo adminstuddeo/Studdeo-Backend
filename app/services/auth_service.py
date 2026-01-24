@@ -127,7 +127,7 @@ class AuthService:
 
         client: EmailClient = EmailClient()
 
-        await client.send_email(
+        client.send_email(
             subject="Restore passsword",
             email=user.email,
             email_information=email_information,

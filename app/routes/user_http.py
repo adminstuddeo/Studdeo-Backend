@@ -75,7 +75,7 @@ async def route_create_user(
             **user_create.model_dump(),
         )
 
-        await client.send_email(
+        client.send_email(
             subject="Bienvenido a Studeeo!!",
             email=user_create.email,
             email_information=email_information,
