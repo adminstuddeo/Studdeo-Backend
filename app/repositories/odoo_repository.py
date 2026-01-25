@@ -227,7 +227,7 @@ class OdooRepository:
                     date=sale["date_order"],
                     details_sale=order_mapped[sale["id"]],
                     discount=sale["reward_amount"],
-                    total=sale["amount_total"] * discount,
+                    total=sale["amount_total"],
                     contract_discount=discount,
                 )
             )
